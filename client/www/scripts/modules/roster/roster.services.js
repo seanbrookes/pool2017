@@ -20,6 +20,20 @@ Roster.service('RosterService',[
           $log.warn('bad get all rosters: ' + JSON.stringify(error));
         });
     };
+    svc.addRoster = function(roster) {
+      if (roster.slug) {
+        return Roster.create(roster)
+          .$promise
+          .then(function(response) {
+            $log.debug('Roster Added: ', response);
+            return response;
+          })
+          .catch(function(error) {
+            $log.warn('bad add roster', error);
+          });
+
+      }
+    };
     svc.getRoster = function(slug) {
       var filter = {
         'filter[where][slug]':slug

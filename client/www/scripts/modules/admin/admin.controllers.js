@@ -91,7 +91,9 @@ Admin.controller('RosterAdminController',[
   '$scope',
   'RosterService',
   'Roster',
-  function($scope, RosterService, Roster) {
+  '$http',
+  '$log',
+  function($scope, RosterService, Roster, $http, $log) {
     "use strict";
     $scope.currRoster = {};
     $scope.loadAdminRoster = function(slug){
@@ -110,6 +112,29 @@ Admin.controller('RosterAdminController',[
         }
       );
 
+    };
+    $scope.bringIt = function(slug) {
+      var pathStub = './scripts/modules/roster/';
+      $http({
+        method: 'GET',
+        url: pathStub + slug + '.json'
+      }).then(function successCallback(response) {
+        var xyz = response.data[0];
+        delete xyz.editPlayer;
+        xyz.year = 2016;
+        $log.debug(xyz);
+        RosterService.addRoster(xyz)
+          .then(function(response) {
+            $log.debug('yeah we did it')
+          })
+          .catch(function(error) {
+            $log.warn('bad create Roster', error);
+          });
+
+      }, function errorCallback(response) {
+        $log.debug('bad load roster json', error);
+
+      })
     };
 
     $scope.editThisPlayer = function(player){

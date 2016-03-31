@@ -27,55 +27,81 @@
     "public": false
   },
   "draftpick": {
-    "dataSource": "bbpool2015",
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   },
   "roster": {
-    "dataSource": "bbpool2015",
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   },
   "rawpitcherstats": {
-    "dataSource": "bbpool2015",
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   },
   "rawpitcherids": {
-    "dataSource": "bbpool2015",
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   },
   "rawbatterids": {
-    "dataSource": "bbpool2015",
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   },
   "dailybatterstat": {
-    "dataSource": "bbpool2015",
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   },
   "dailypitcherstat": {
-    "dataSource": "bbpool2015",
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   },
   "statupdate": {
-    "dataSource": "bbpool2015",
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   },
   "totals": {
-    "dataSource": "bbpool2015",
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   },
   "chatmessage": {
-    "dataSource": "bbpool2015",
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   },
   "rosterplayer": {
-    "dataSource": "bbpool2015",
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   },
   "mlbbatters": {
-    "dataSource": null,
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   },
   "mlbpitchers": {
-    "dataSource": null,
-    "public": true
+    "dataSource": "bbpool2016",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   }
 }
