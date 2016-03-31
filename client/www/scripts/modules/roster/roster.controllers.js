@@ -562,69 +562,138 @@ Roster.controller('RosterDraftViewController', [
   function($scope, $log, $interval, RosterService) {
     $scope.rosterDraftCtx = {};
 
+    function getDraftSort(roster) {
+      var retVal = [];
+
+      var protectedList = [];
+      var bubbleList = [];
+      var prospectList = [];
+      var unprotectedList = [];
+
+      roster.players.map(function(player) {
+        switch(player.draftStatus) {
+          case 'protected':
+            protectedList.push(player);
+            break;
+          case 'bubble':
+            bubbleList.push(player);
+            break;
+          case 'prospect':
+            prospectList.push(player);
+            break;
+          case 'unprotected':
+            unprotectedList.push(player);
+            break;
+          default:
+            unprotectedList.push(player);
+        }
+      });
+
+      protectedList = protectedList.concat(bubbleList);
+      protectedList = protectedList.concat(prospectList);
+      protectedList = protectedList.concat(unprotectedList);
+
+      roster.players = protectedList;
+      return roster;
+
+
+    };
+
+
     $scope.rosterDraftCtx.bashersRoster = RosterService.getRoster('bashers')
       .then(function(roster) {
-        $scope.rosterDraftCtx.bashersRoster = roster;
+        $scope.rosterDraftCtx.bashersRoster = getDraftSort(roster);
       });
     $scope.rosterDraftCtx.masherssRoster = RosterService.getRoster('mashers')
       .then(function(roster) {
-        $scope.rosterDraftCtx.mashersRoster = roster;
+        $scope.rosterDraftCtx.mashersRoster = getDraftSort(roster);
       });
     $scope.rosterDraftCtx.rallycapsRoster = RosterService.getRoster('rallycaps')
       .then(function(roster) {
-        $scope.rosterDraftCtx.rallycapsRoster = roster;
+        $scope.rosterDraftCtx.rallycapsRoster = getDraftSort(roster);
       });
     $scope.rosterDraftCtx.stallionsRoster = RosterService.getRoster('stallions')
       .then(function(roster) {
-        $scope.rosterDraftCtx.stallionsRoster = roster;
+        $scope.rosterDraftCtx.stallionsRoster = getDraftSort(roster);
       });
 
     $scope.loadBashers = function() {
-      $scope.rosterDraftCtx.bashersRoster = RosterService.getRoster('bashers')
+      return $scope.rosterDraftCtx.bashersRoster = RosterService.getRoster('bashers')
         .then(function(roster) {
-          $scope.rosterDraftCtx.bashersRoster = roster;
+          return $scope.rosterDraftCtx.bashersRoster = getDraftSort(roster);
         });
     };
     $scope.loadMashers = function() {
-      $scope.rosterDraftCtx.masherssRoster = RosterService.getRoster('mashers')
+      return $scope.rosterDraftCtx.masherssRoster = RosterService.getRoster('mashers')
         .then(function(roster) {
-          $scope.rosterDraftCtx.mashersRoster = roster;
+          return $scope.rosterDraftCtx.mashersRoster = getDraftSort(roster);
         });
 
 
     };
     $scope.loadRallycaps = function() {
-      $scope.rosterDraftCtx.rallycapsRoster = RosterService.getRoster('rallycaps')
+      return $scope.rosterDraftCtx.rallycapsRoster = RosterService.getRoster('rallycaps')
         .then(function(roster) {
-          $scope.rosterDraftCtx.rallycapsRoster = roster;
+          return $scope.rosterDraftCtx.rallycapsRoster = getDraftSort(roster);
         });
 
 
     };
     $scope.loadStallions = function() {
-      $scope.rosterDraftCtx.stallionsRoster = RosterService.getRoster('stallions')
+      return $scope.rosterDraftCtx.stallionsRoster = RosterService.getRoster('stallions')
         .then(function(roster) {
-          $scope.rosterDraftCtx.stallionsRoster = roster;
+          return $scope.rosterDraftCtx.stallionsRoster = getDraftSort(roster);
         });
 
 
     };
 
-    $scope.init = function() {
-
-      $interval(function() {
-        $scope.loadBashers();
-      }, (1000 * 700));
-      $interval(function() {
-        $scope.loadMashers();
-      },  (1000 * 200));
-      $interval(function() {
-        $scope.loadRallycaps();
-      },  (1000 * 230));
-      $interval(function() {
-        $scope.loadStallions();
-      },  (1000 * 309));
+    $scope.saveRoster = function(roster) {
+      if (roster.name && roster.players) {
+        RosterService.updateRoster(roster)
+          .$promise
+          .then(function(response) {
+            switch (roster.slug) {
+              case 'bashers' :
+                $scope.loadBashers();
+                break;
+              case 'mashers' :
+                $scope.loadMashers();
+                break;
+              case 'mashers' :
+                $scope.loadMashers();
+                break;
+              case 'rallycaps' :
+                $scope.loadRallycaps();
+                break;
+              default :
+                break;
+            }
+          });
+      }
     };
+
+    $scope.init = function() {
+      $scope.loadBashers();
+      $scope.loadMashers();
+      $scope.loadRallycaps();
+      $scope.loadStallions();
+    };
+    //$scope.initBak = function() {
+    //
+    //  $interval(function() {
+    //    $scope.loadBashers();
+    //  }, (1000 * 700));
+    //  $interval(function() {
+    //    $scope.loadMashers();
+    //  },  (1000 * 200));
+    //  $interval(function() {
+    //    $scope.loadRallycaps();
+    //  },  (1000 * 230));
+    //  $interval(function() {
+    //    $scope.loadStallions();
+    //  },  (1000 * 309));
+    //};
 
     $scope.init();
   }

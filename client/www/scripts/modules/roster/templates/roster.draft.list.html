@@ -1,25 +1,34 @@
-<div data-ui-type="table" >
-  <div data-ui-type="row" ng-repeat="player in scope.dPlayers">
-    <div data-ui-type="cell" >{{player.name}}</div>
-    <div data-ui-type="cell">
+<table class="PreDraftRosterTable">
+  <caption>{{roster.name}}</caption>
+<tbody>
+  <tr data-ui-type="row" ng-repeat="player in  roster.players">
+    <td>{{$index + 1}}</td>
+    <td>{{player.name}}</td>
+    <td>
       {{player.pos}}
-      <select id="PosSelect" ng-change="updatePlayerPos()" class="select-pos pick-property-edit" ng-model="player.pos"  data-type="pos">
-        <option value="C">C</option>
-        <option value="1B">1B</option>
-        <option value="2B">2B</option>
-        <option value="3B">3B</option>
-        <option value="SS">SS</option>
-        <option value="LF">LF</option>
-        <option value="CF">CF</option>
-        <option value="RF">RF</option>
-        <option value="DH">DH</option>
-        <option value="SP">SP</option>
-        <option value="RP">RP</option>
+      <!--<select id="PosSelect" ng-change="updatePlayerPos()" class="select-pos pick-property-edit" ng-model="player.pos"  data-type="pos">-->
+        <!--<option value="C">C</option>-->
+        <!--<option value="1B">1B</option>-->
+        <!--<option value="2B">2B</option>-->
+        <!--<option value="3B">3B</option>-->
+        <!--<option value="SS">SS</option>-->
+        <!--<option value="LF">LF</option>-->
+        <!--<option value="CF">CF</option>-->
+        <!--<option value="RF">RF</option>-->
+        <!--<option value="DH">DH</option>-->
+        <!--<option value="SP">SP</option>-->
+        <!--<option value="RP">RP</option>-->
+      <!--</select>-->
+    </td>
+    <td>{{player.team}}</td>
+    <td>
+      <select ng-change="updatePlayerDraftStatus(roster)" ng-model="player.draftStatus" >
+        <option value="protected">protected</option>
+        <option value="bubble">bubble</option>
+        <option value="unprotected">unprotected</option>
+        <option value="prospect">prospect</option>
       </select>
-    </div>
-    <div data-ui-type="cell">{{player.team}}</div>
-    <div data-ui-type="cell">
-      <button ng-click="editPlayer(player)">edit</button>
-    </div>
-  </div>
-</div>
+    </td>
+  </tr>
+  </tbody>
+</table>

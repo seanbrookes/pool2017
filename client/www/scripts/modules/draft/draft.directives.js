@@ -15,3 +15,12 @@ Draft.directive('bbpDraftMain', [
     }
   }
 ]);
+
+Draft.directive('bbpDraftRoster', [
+  function() {
+    return {
+      restrict: 'E',
+      templateUrl: './scripts/modules/draft/templates/draft.roster.html'
+    }
+  }
+]);

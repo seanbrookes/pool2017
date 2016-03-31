@@ -56,6 +56,38 @@ Roster.directive('bbpRosterDraftView', [
     }
   }
 ]);
+Roster.directive('bbpRosterDraftList', [
+  '$timeout',
+  function($timeout) {
+    return {
+      restrict: 'E',
+      scope: {
+        roster: '=',
+        saveRoster: '&'
+      },
+      templateUrl: './scripts/modules/roster/templates/roster.draft.list.html',
+      link: function(scope, el, attrs) {
+
+        //scope.$watch('roster', function(newVal, oldVal) {
+        //  var x = scope;
+        //  console.log('scope', x);
+        //});
+
+        scope.updatePlayerDraftStatus = function(roster) {
+          scope.saveRoster({roster: roster});
+          //.then(function(response) {
+          //  console.log('Saved the Roster');
+          //});
+
+        };
+
+
+
+      }
+    }
+  }
+]);
+
 Roster.directive('bbpDraftRosterBashers', [
   '$timeout',
   function($timeout) {

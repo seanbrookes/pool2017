@@ -1,21 +1,6 @@
-<div ng-controller="RosterDraftViewController" data-id="DraftRosterViewContainer" class="row">
-  <!-- top row -->
-  <div class="col-md-6">
-    Bashers
-    <bbp-draft-roster-bashers></bbp-draft-roster-bashers>
-  </div>
-  <div class="col-md-6">
-    Mashers
-    <bbp-draft-roster-mashers></bbp-draft-roster-mashers>
-
-  </div>
-  <!-- bottom row -->
-  <div class="col-md-6">
-    Rally Caps
-    <bbp-draft-roster-rallycaps></bbp-draft-roster-rallycaps>
-  </div>
-  <div class="col-md-6">
-    Stallions
-    <bbp-draft-roster-stallions></bbp-draft-roster-stallions>
-  </div>
+<div ng-controller="RosterDraftViewController" data-id="DraftRosterViewContainer" class="Layout Layout__Responsive">
+  <bbp-roster-draft-list roster="rosterDraftCtx.bashersRoster" save-roster="saveRoster(roster)"></bbp-roster-draft-list>
+  <bbp-roster-draft-list roster="rosterDraftCtx.mashersRoster" save-roster="saveRoster(roster)"></bbp-roster-draft-list>
+  <bbp-roster-draft-list roster="rosterDraftCtx.rallycapsRoster" save-roster="saveRoster(roster)"></bbp-roster-draft-list>
+  <bbp-roster-draft-list roster="rosterDraftCtx.stallionsRoster" save-roster="saveRoster(roster)"></bbp-roster-draft-list>
 </div>

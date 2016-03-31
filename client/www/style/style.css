@@ -9,6 +9,15 @@ table {
   width: 100%;
   padding: 0;
 }
+.Layout {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.PreDraftRosterTable {
+  font-size: 13px;
+}
 .main-content-container {
   background-color: #ffffff;
   color: #444444;
@@ -35,6 +44,13 @@ nav.rallycaps a.rallycaps {
 nav.stallions a.stallions {
   background-color: #ffffff;
   color: #444444;
+}
+.PreDraftRosterTable {
+  margin: 0 2rem 0 2rem;
+  border: 1px solid #eeeeee;
+}
+.PreDraftRosterTable tbody tr:nth-child(odd) {
+  background-color: #eeeeee;
 }
 div.mashers .side-nav-bar tr.mashers {
   background-color: #ffffff;
