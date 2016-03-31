@@ -1,0 +1,11 @@
+{
+  "name": "totals",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

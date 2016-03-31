@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-xs-3">
+    <!-- grandTotal -->
+    <h3>totals</h3>
+    <table class="general-total-table">
+      <tr ng-repeat="roster in rosters | orderBy:['-grandTotal'] | unique:'roster'">
+        <td class="roster-link-cell">
+          <a href="#roster/{{ roster.roster }}">{{ roster.roster }}</a>
+        </td>
+        <td class="total-value-cell">
+          <span>{{ roster.grandTotal }}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-xs-3">
+    <!-- batterTotal -->
+    <h3>batters</h3>
+    <table class="general-total-table">
+      <tr ng-repeat="roster in rosters | orderBy:['-batterTotal'] | unique:'roster'">
+        <td class="roster-link-cell">
+          <a href="#roster/{{ roster.roster }}">{{ roster.roster }}</a>
+        </td>
+        <td class="total-value-cell">
+          <span>{{ roster.batterTotal }}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-xs-3">
+    <!-- starterTotal -->
+    <h3>starters</h3>
+    <table class="general-total-table">
+      <tr ng-repeat="roster in rosters | orderBy:['-starterTotal'] | unique:'roster'">
+        <td class="roster-link-cell">
+          <a href="#roster/{{ roster.roster }}">{{ roster.roster }}</a>
+        </td>
+        <td class="total-value-cell">
+          <span>{{ roster.starterTotal }}</span>
+        </td>
+
+      </tr>
+    </table>
+  </div>
+  <div class="col-xs-3">
+    <!-- closerTotal -->
+    <h3>closers</h3>
+    <table class="general-total-table">
+      <tr ng-repeat="roster in rosters | orderBy:['-closerTotal'] | unique:'roster'">
+        <td class="roster-link-cell">
+          <a href="#roster/{{ roster.roster }}">{{ roster.roster }}</a>
+        </td>
+        <td class="total-value-cell">
+          <span>{{ roster.closerTotal }}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

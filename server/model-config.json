@@ -1,0 +1,81 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ]
+  },
+  "User": {
+    "dataSource": "db"
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "draftpick": {
+    "dataSource": "bbpool2015",
+    "public": true
+  },
+  "roster": {
+    "dataSource": "bbpool2015",
+    "public": true
+  },
+  "rawpitcherstats": {
+    "dataSource": "bbpool2015",
+    "public": true
+  },
+  "rawpitcherids": {
+    "dataSource": "bbpool2015",
+    "public": true
+  },
+  "rawbatterids": {
+    "dataSource": "bbpool2015",
+    "public": true
+  },
+  "dailybatterstat": {
+    "dataSource": "bbpool2015",
+    "public": true
+  },
+  "dailypitcherstat": {
+    "dataSource": "bbpool2015",
+    "public": true
+  },
+  "statupdate": {
+    "dataSource": "bbpool2015",
+    "public": true
+  },
+  "totals": {
+    "dataSource": "bbpool2015",
+    "public": true
+  },
+  "chatmessage": {
+    "dataSource": "bbpool2015",
+    "public": true
+  },
+  "rosterplayer": {
+    "dataSource": "bbpool2015",
+    "public": true
+  },
+  "mlbbatters": {
+    "dataSource": null,
+    "public": true
+  },
+  "mlbpitchers": {
+    "dataSource": null,
+    "public": true
+  }
+}
