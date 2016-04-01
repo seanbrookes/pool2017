@@ -1,3 +1,37 @@
+Roster.directive('bbpRosterPlayerForm', [
+  function() {
+    return {
+      restrict: 'E',
+      templateUrl: './scripts/modules/roster/templates/roster.player.form.html',
+      controller: [
+        '$scope',
+        '$log',
+        'Roster',
+        'RosterService',
+        function($scope, $log, Roster, RosterService) {
+
+          $scope.newPlayerCtx = {};
+
+          $scope.clearNewPlayer = function() {
+            $scope.newPlayerCtx = {};
+          };
+
+          $scope.createPlayer = function() {
+            if ($scope.newPlayerCtx && $scope.newPlayerCtx.name && $scope.newPlayerCtx.slug) {
+              RosterService.saveRosterPlayer($scope.newPlayerCtx)
+                .then(function(response) {
+                  $log.debug('saved player');
+                  $scope.clearNewPlayer();
+                });
+
+            }
+          }
+
+        }
+      ]
+    }
+  }
+]);
 Roster.directive('bbpPlayerForm', [
   function() {
     return {
@@ -8,12 +42,12 @@ Roster.directive('bbpPlayerForm', [
         '$log',
         'Roster',
         function($scope, $log, Roster) {
+
           $scope.clearEditPlayer = function() {
             delete $scope.currentEditRoster.editPlayer;
-
-
-
           };
+
+          $scope.currentEditRoster = {};
           $scope.saveEditPlayer = function() {
             var rosterObj = $scope.currentEditRoster;
             delete rosterObj._id;
@@ -66,6 +100,25 @@ Roster.directive('bbpRosterDraftList', [
         saveRoster: '&'
       },
       templateUrl: './scripts/modules/roster/templates/roster.draft.list.html',
+      controller:[
+        '$scope',
+        'RosterService',
+        function($scope, RosterService) {
+
+          $scope.deleteRosterPlayer = function(roster, playerIndex) {
+            var player = roster.players[playerIndex];
+            if (roster && player) {
+              if (confirm('delete player?')) {
+                RosterService.deleteRosterPlayer(roster, player)
+                  .then(function(response) {
+                    $log.debug('Deleted PLayer');
+                  });
+              }
+            }
+          };
+
+        }
+      ],
       link: function(scope, el, attrs) {
 
         //scope.$watch('roster', function(newVal, oldVal) {

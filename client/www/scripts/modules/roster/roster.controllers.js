@@ -673,6 +673,8 @@ Roster.controller('RosterDraftViewController', [
       }
     };
 
+
+
     $scope.init = function() {
       $scope.loadBashers();
       $scope.loadMashers();

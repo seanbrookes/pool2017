@@ -1,3 +1,28 @@
 .PreDraftRosterTable {
-  font-size:13px;
+  margin:0 2rem 0 2rem;
+
+  border:1px solid #eeeeee;
+
+  tbody {
+    tr:nth-child(even) {
+      background-color: #efefef;
+
+    }
+    td {
+      font-size:13px;
+      color:#888888;
+    }
+    tr.draft-protected:nth-child(even) {
+        background-color: #dfdfdf;
+
+    }
+    tr.draft-protected {
+
+      td {
+        color:#1C9618;
+      }
+
+    }
+
+  }
 }

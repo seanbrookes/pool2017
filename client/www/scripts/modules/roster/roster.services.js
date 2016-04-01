@@ -70,6 +70,29 @@ Roster.service('RosterService',[
           return;
         });
     };
+    svc.saveRosterPlayer = function(player) {
+
+      return svc.getRoster(player.slug)
+        .then(function(roster) {
+          var isUnique = true;
+          roster.players.map(function(rPlayer) {
+            if (rPlayer.name === player.name) {
+              rPlayer = player;
+              isUnique = false;
+            }
+          });
+          if (isUnique) {
+            roster.players.push(player);
+          }
+          svc.updateRoster(roster);
+          return player;
+        });
+      // get the roster based on the slug
+      // check to see if player exists
+      // if so then assign this object to player
+      // if not add player to players collection
+      // save roster
+    };
     svc.deleteRosterPlayer = function(roster, player) {
       roster.players.map(function(p, i) {
         if (p.name === player.name) {

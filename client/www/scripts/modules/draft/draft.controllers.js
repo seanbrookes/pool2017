@@ -25,6 +25,7 @@ Draft.controller('DraftMainController',[
       $scope.showPickForm = true;
       $scope.ePick = pick;
     };
+
 //    $scope.deletePick = function(pick){
 //      delete pick._id;
 //      console.log('test delete');

@@ -16,7 +16,21 @@ table {
   justify-content: space-around;
 }
 .PreDraftRosterTable {
+  margin: 0 2rem 0 2rem;
+  border: 1px solid #eeeeee;
+}
+.PreDraftRosterTable tbody tr:nth-child(even) {
+  background-color: #efefef;
+}
+.PreDraftRosterTable tbody td {
   font-size: 13px;
+  color: #888888;
+}
+.PreDraftRosterTable tbody tr.draft-protected:nth-child(even) {
+  background-color: #dfdfdf;
+}
+.PreDraftRosterTable tbody tr.draft-protected td {
+  color: #1C9618;
 }
 .main-content-container {
   background-color: #ffffff;
@@ -45,12 +59,12 @@ nav.stallions a.stallions {
   background-color: #ffffff;
   color: #444444;
 }
-.PreDraftRosterTable {
-  margin: 0 2rem 0 2rem;
-  border: 1px solid #eeeeee;
+.SilentButton {
+  border: 0;
+  background: transparent;
 }
-.PreDraftRosterTable tbody tr:nth-child(odd) {
-  background-color: #eeeeee;
+.SilentButton:hover {
+  text-decoration: none;
 }
 div.mashers .side-nav-bar tr.mashers {
   background-color: #ffffff;
