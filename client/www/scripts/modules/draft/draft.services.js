@@ -17,7 +17,7 @@ Draft.service('DraftServices', [
         });
     };
     svc.updateDraftPick = function(pick) {
-      if (pick.name && pick.pos && pick.team) {
+      if (pick.id && pick.roster) {
         delete pick._id;
         return Draftpick.upsert(pick,
           function(response){

@@ -30,8 +30,12 @@
     </thead>
     <tbody>
     <tr ng-class="getDraftRowClass(pick)" class="DraftPickRow" ng-repeat="pick in draftPicks | orderBy:['pickNumber'] ">
-      <td class="DraftPickCell DraftPickCell__Round">{{ pick.round }}</td>
-      <td class="DraftPickCell DraftPickCell__PickNumber">{{ pick.pickNumber }}</td>
+      <td class="DraftPickCell DraftPickCell__Round">
+        {{ pick.round }}
+      </td>
+      <td class="DraftPickCell DraftPickCell__PickNumber">
+        <button class="SilentButton" ng-click="clearPick(pick)">{{ pick.pickNumber }}</button>
+      </td>
       <td class="DraftPickCell DraftPickCell__Roster">
         {{pick.roster}}
         <!--<select  ng-change="updatePickRoster(pick)" ng-model="pick.roster">-->

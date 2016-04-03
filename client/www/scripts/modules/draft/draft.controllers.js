@@ -11,22 +11,52 @@ Draft.controller('DraftMainController',[
     console.log('Draft Main Controller');
 
     $scope.ePlayer = {status:'drafted'};
-
+    $scope.draftPicks = [];
     $scope.draftCtx = {currentPick:{}};
+    $scope.draftCtx.currentPickRoster = 'mashers';
 
+    function loadBoard() {
+      $scope.draftPicks = DraftServices.getDraftBoard()
+        .then(function(response) {
+          for (var i = 0;i < response.length;i++) {
+            var pick = response[i];
+            if (!pick.name && !pick.pos && !pick.team) {
+              $scope.draftCtx.currentPickRoster = pick.roster;
+              break;
+
+            }
+
+          }
+          $scope.draftPicks = response;
+        });
+
+    }
     function resetCurrentPick() {
       $scope.draftCtx.currentPick = {};
     }
 
+    $scope.clearPick = function(pick) {
+      if (confirm('clear pick?')) {
+        pick.name = '';
+        pick.pos = '';
+        pick.team = '';
+        return DraftServices.updateDraftPick(pick)
+          .$promise
+          .then(function(response) {
+            resetCurrentPick();
+            loadBoard();
+            return response;
+          });
+
+      }
+
+    };
     function isOdd(num) { return num % 2;}
 
-    $scope.draftPicks = DraftServices.getDraftBoard()
-      .then(function(response) {
-        $scope.draftPicks = response;
-      });
+
 
     $scope.saveDraftPick = function() {
-      if ($scope.draftCtx && $scope.draftCtx.currentPick && $scope.draftCtx.currentPick.name) {
+      if ($scope.draftCtx && $scope.draftCtx.currentPick && $scope.draftCtx.currentPick.name && $scope.draftCtx.currentPick.pos && $scope.draftCtx.currentPick.team) {
         // find the currentPick
         // get the draft collection
         // iterate to find the current pick
@@ -38,7 +68,20 @@ Draft.controller('DraftMainController',[
               var pick = $scope.draftPicks[i];
               if (!pick.name && !pick.pos && !pick.team) {
                 $log.debug('Make Draft Pick [' + pick.id + ']', $scope.draftCtx.currentPick);
+                pick.name = $scope.draftCtx.currentPick.name;
+                pick.pos = $scope.draftCtx.currentPick.pos;
+                pick.team = $scope.draftCtx.currentPick.team;
+
+                return DraftServices.updateDraftPick(pick)
+                  .$promise
+                  .then(function(response) {
+                    resetCurrentPick();
+                    return response;
+
+
+                  });
                 break;
+
               }
 
             }
@@ -222,7 +265,7 @@ Draft.controller('DraftMainController',[
     //  ]
     //
     //};
-
+    loadBoard();
 
   }
 ]);

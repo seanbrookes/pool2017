@@ -540,8 +540,10 @@ Original
 .roster-table button {
   /*display:none;*/
 }
-.draft-table button {
-  display: none;
+.ButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 .player-list-container {
   height: 500px;
