@@ -1,70 +1,14 @@
 <div data-id="draft-board-container">
   <!--<div class="postGridStyle" ng-grid="draftGridOptions"></div>-->
-  <div id="PickForm" name="PickForm"  ng-show="isDog()">
-    <label>type: <select  ng-model="ePlayer.status">
-      <option value="drafted">drafted</option>
-      <option value="protected">protected</option>
-    </select>
-    </label>
-    <label for="PosTypeSelect">Position Type</label>
-    <select id="PosTypeSelect" ng-model="ePlayer.posType" class="status-select">
-      <option value="hitter">hitter</option>
-      <option value="pitcher">pitcher</option>
-    </select>
-    <br />
-    <label>roster:
-      <select id="RosterSelect" ng-model="ePlayer.slug" class="roster-select">
-        <option value="bashers">bashers</option>
-        <option value="mashers">mashers</option>
-        <option value="rallycaps">rallycaps</option>
-        <option value="stallions">stallions</option>
-      </select>
-    </label>
-    <!--<label>round: <input type="text" ng-model="ePlayer.round"></label>-->
-    <!--<label>pick: <input type="text" ng-model="ePlayer.pickNumber"></label>-->
-    <label>player: <input type="text" ng-model="ePlayer.name"></label>
-    <label>pos:</label>
-    <select id="PosSelect" class="select-pos pick-property-edit" ng-model="ePlayer.pos"  data-type="pos">
-      <option value="C">C</option>
-      <option value="1B">1B</option>
-      <option value="2B">2B</option>
-      <option value="3B">3B</option>
-      <option value="SS">SS</option>
-      <option value="LF">LF</option>
-      <option value="CF">CF</option>
-      <option value="RF">RF</option>
-      <option value="DH">DH</option>
-      <option value="SP">SP</option>
-      <option value="RP">RP</option>
-    </select>
-    <label>team:</label>
-    <select class="select-team pick-property-edit" id="TeamSelect" ng-model="ePlayer.team" data-type="team">
-      <option value="BAL">BAL</option>
-      <option value="BOS">BOS</option>
-      <option value="CHA">CHA</option>
-      <option value="CLE">CLE</option>
-      <option value="DET">DET</option>
-      <option value="HOU">HOU</option>
-      <option value="KC">KC</option>
-      <option value="LAA">LAA</option>
-      <option value="MIN">MIN</option>
-      <option value="NYY">NYY</option>
-      <option value="OAK">OAK</option>
-      <option value="SEA">SEA</option>
-      <option value="TB">TB</option>
-      <option value="TEX">TEX</option>
-      <option value="TOR">TOR</option>
-    </select>
-    <input type="button" ng-click="saveDraftBoardPlayer()" value="save" />
-  </div>
 
   <table class="draft-table">
+    <thead>
     <tr>
       <th>
-        pick
+        rnd
       </th>
       <th>
-        round
+        pk
       </th>
       <th>
         roster
@@ -83,18 +27,30 @@
       </th>
 
     </tr>
-    <tr ng-repeat="pick in draftPicks | orderBy:['pickNumber'] ">
-      <td>{{ pick.pickNumber }}</td>
-      <td>{{ pick.round }}</td>
-      <td>{{ pick.roster }}</td>
-      <td>{{ pick.name }}</td>
-      <td>{{ pick.pos }}</td>
-      <td>{{ pick.team }}</td>
+    </thead>
+    <tbody>
+    <tr ng-class="getDraftRowClass(pick)" class="DraftPickRow" ng-repeat="pick in draftPicks | orderBy:['pickNumber'] ">
+      <td class="DraftPickCell DraftPickCell__Round">{{ pick.round }}</td>
+      <td class="DraftPickCell DraftPickCell__PickNumber">{{ pick.pickNumber }}</td>
+      <td class="DraftPickCell DraftPickCell__Roster">
+        {{pick.roster}}
+        <!--<select  ng-change="updatePickRoster(pick)" ng-model="pick.roster">-->
+        <!--<option value="bashers">bashers</option>-->
+        <!--<option value="mashers">mashers</option>-->
+        <!--<option value="rallycaps">rallycaps</option>-->
+        <!--<option value="stallions">stallions</option>-->
+        <!--</select>-->
+      </td>
+      <td class="DraftPickCell DraftPickCell__Name">{{ pick.name }}</td>
+      <td class="DraftPickCell DraftPickCell__Pos">{{ pick.pos }}</td>
+      <td class="DraftPickCell DraftPickCell__Team">{{ pick.team }}</td>
       <td>
         <button ng-click="editPick(pick)" ng-model="pick" ng-show="isDog()">edit</button>
         <button ng-click="deletePick(pick)" ng-model="pick" ng-show="isDog()">delete</button>
       </td>
     </tr>
+    </tbody>
+
   </table>
 </div>
 

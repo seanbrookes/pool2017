@@ -39,6 +39,42 @@
   border:1px solid blue;
 
 }
+.DraftPickFormContainer {
+  padding:1rem;
+  border:1px solid #eeeeee;
+  border-radius:1rem;
+}
+.DraftPickRow {
+
+}
+.DraftPickRow--odd {
+  background-color: #eeeeee;
+  .DraftPickCell {
+    border:1px solid #ffffff;
+  }
+}
+.DraftPickCell {
+
+  border:1px solid #eeeeee;
+
+  &.DraftPickCell__Round {
+    width:3rem;
+    padding-left:.2rem;
+
+  }
+  &.DraftPickCell__PickNumber {
+    width:3rem;
+    padding-left:.2rem;
+  }
+  &.DraftPickCell__Roster {
+    width:10rem;
+  }
+  &.DraftPickCell__Name {
+    width:26rem;
+  }
+}
+
+
 .RosterDiamondContainer {
   position:relative;
   border:1px solid black;

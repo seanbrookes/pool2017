@@ -1,30 +1,41 @@
-/**
- * Created by seanbrookes on 2014-03-27.
- */
-Draft.service('DraftService',[
-  'Draft',
+Draft.service('DraftServices', [
+  '$log',
   'Draftpick',
-  function(Draft, Draftpick){
-    "use strict";
+  function($log, Draftpick) {
+    var svc = this;
+    svc.getDraftBoard = function(filter) {
+      if (!filter) {
+        filter = {};
+      }
+      return Draftpick.find(filter)
+        .$promise
+        .then(function(response) {
+          return response;
+        })
+        .catch(function(error) {
 
-    var svc = {api:{}};
-    svc.api.Draft = Draft;
-    svc.addDraftSlot = function(slot){
+        });
+    };
+    svc.updateDraftPick = function(pick) {
+      if (pick.name && pick.pos && pick.team) {
+        delete pick._id;
+        return Draftpick.upsert(pick,
+          function(response){
 
-      return DraftPick.create(slot,
-        function(response){
-          console.log('added draft slot');
-        },
-        function(response){
-          console.log('error adding draft slot');
-        }
+            return response;
 
-      );
+          },
+          function(error){
+            $log.warn('bad update pick: ', error);
+          }
+        );
 
+      }
     };
 
+
+
+
     return svc;
-
   }
-
 ]);

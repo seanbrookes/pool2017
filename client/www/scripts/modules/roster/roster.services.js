@@ -7,7 +7,7 @@ Roster.service('RosterService',[
   '$log',
   function(Roster,$q, $log){
 
-    var svc = {};
+    var svc = this;
 
     svc.getAllRosters = function() {
       //Roster.find({}, function(err, respon))

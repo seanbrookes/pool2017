@@ -44,6 +44,34 @@ table {
   max-width: 40rem;
   border: 1px solid blue;
 }
+.DraftPickFormContainer {
+  padding: 1rem;
+  border: 1px solid #eeeeee;
+  border-radius: 1rem;
+}
+.DraftPickRow--odd {
+  background-color: #eeeeee;
+}
+.DraftPickRow--odd .DraftPickCell {
+  border: 1px solid #ffffff;
+}
+.DraftPickCell {
+  border: 1px solid #eeeeee;
+}
+.DraftPickCell.DraftPickCell__Round {
+  width: 3rem;
+  padding-left: .2rem;
+}
+.DraftPickCell.DraftPickCell__PickNumber {
+  width: 3rem;
+  padding-left: .2rem;
+}
+.DraftPickCell.DraftPickCell__Roster {
+  width: 10rem;
+}
+.DraftPickCell.DraftPickCell__Name {
+  width: 26rem;
+}
 .RosterDiamondContainer {
   position: relative;
   border: 1px solid black;

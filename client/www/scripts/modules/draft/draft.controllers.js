@@ -4,26 +4,80 @@
 Draft.controller('DraftMainController',[
   '$scope',
   'Draftpick',
-  '$timeout',
+  'DraftServices',
   'RosterService',
   '$log',
-  function($scope, Draftpick, $timeout, RosterService, $log){
+  function($scope, Draftpick, DraftServices, RosterService, $log){
     console.log('Draft Main Controller');
 
     $scope.ePlayer = {status:'drafted'};
 
-    $scope.draftPicks = Draftpick.query({},
-      function(response){
-        //console.log('good get Draftpicks: ' + response);
-      },
-      function(respeonse){
-        console.log('bad get draftpics');
+    $scope.draftCtx = {currentPick:{}};
+
+    function resetCurrentPick() {
+      $scope.draftCtx.currentPick = {};
+    }
+
+    function isOdd(num) { return num % 2;}
+
+    $scope.draftPicks = DraftServices.getDraftBoard()
+      .then(function(response) {
+        $scope.draftPicks = response;
+      });
+
+    $scope.saveDraftPick = function() {
+      if ($scope.draftCtx && $scope.draftCtx.currentPick && $scope.draftCtx.currentPick.name) {
+        // find the currentPick
+        // get the draft collection
+        // iterate to find the current pick
+        // the one with no name/pos/team
+        DraftServices.getDraftBoard()
+          .then(function(response) {
+            $scope.draftPicks = response;
+            $scope.draftPicks.map(function(pick) {
+              if (!pick.name && !pick.pos && !pick.team) {
+                DraftServices.up
+              }
+            });
+          });
       }
-    );
+
+    };
+
     $scope.editPick = function(pick){
       console.log('edit pick: ' + JSON.stringify(pick));
       $scope.showPickForm = true;
       $scope.ePick = pick;
+    };
+
+    $scope.getDraftRowClass = function(pick) {
+      var returnClass = 'DraftPickRow';
+      if (pick && pick.round) {
+        if (isOdd(pick.round)) {
+          returnClass += '--odd';
+        }
+        else {
+          returnClass += '--even';
+
+        }
+
+      }
+
+      return returnClass;
+    };
+
+    $scope.updatePickRoster = function(pick) {
+      if (pick && pick.roster) {
+        Draftpick.upsert(pick)
+        .$promise
+        .then(function(response) {
+          $log.debug('good pick update');
+        })
+        .catch(function(error) {
+          $log.warn('bad update pick', error);
+        });
+
+      }
     };
 
 //    $scope.deletePick = function(pick){
@@ -48,6 +102,7 @@ Draft.controller('DraftMainController',[
 //      );
 //    };
     $scope.showPickForm = false;
+
     $scope.savePick = function(pick){
       console.log('save pick: ' + JSON.stringify(pick));
 
@@ -126,44 +181,44 @@ Draft.controller('DraftMainController',[
       console.log('ed ide:  ' + JSON.stringify(data));
     }
 
-    $scope.draftGridOptions = {
-      data: 'draftPicks',
-      enableCellSelection: true,
-      enableRowSelection: false,
-      enableCellEditOnFocus: true,
-      ngGridEventEndCellEdit: giverShit,
-      columnDefs: [
-        {
-          field:'pickNumber',
-          displayName:'pk'
-        },
-        {
-          field:'round',
-          displayName:'rnd'
-        },
-        {
-          field:'roster',
-          displayName:'roster',
-          enableCellEdit: true
-        },
-        {
-          field:'player',
-          displayName:'player',
-          enableCellEdit: true
-        },
-        {
-          field:'pos',
-          displayName:'pos',
-          enableCellEdit: true
-        },
-        {
-          field:'team',
-          displayName:'team',
-          enableCellEdit: true
-        }
-      ]
-
-    };
+    //$scope.draftGridOptions = {
+    //  data: 'draftPicks',
+    //  enableCellSelection: true,
+    //  enableRowSelection: false,
+    //  enableCellEditOnFocus: true,
+    //  ngGridEventEndCellEdit: giverShit,
+    //  columnDefs: [
+    //    {
+    //      field:'pickNumber',
+    //      displayName:'pk'
+    //    },
+    //    {
+    //      field:'round',
+    //      displayName:'rnd'
+    //    },
+    //    {
+    //      field:'roster',
+    //      displayName:'roster',
+    //      enableCellEdit: true
+    //    },
+    //    {
+    //      field:'player',
+    //      displayName:'player',
+    //      enableCellEdit: true
+    //    },
+    //    {
+    //      field:'pos',
+    //      displayName:'pos',
+    //      enableCellEdit: true
+    //    },
+    //    {
+    //      field:'team',
+    //      displayName:'team',
+    //      enableCellEdit: true
+    //    }
+    //  ]
+    //
+    //};
 
 
   }
