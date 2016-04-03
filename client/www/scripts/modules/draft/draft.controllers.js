@@ -34,11 +34,14 @@ Draft.controller('DraftMainController',[
         DraftServices.getDraftBoard()
           .then(function(response) {
             $scope.draftPicks = response;
-            $scope.draftPicks.map(function(pick) {
+            for (var i = 0;i < $scope.draftPicks.length;i++) {
+              var pick = $scope.draftPicks[i];
               if (!pick.name && !pick.pos && !pick.team) {
-                DraftServices.up
+                $log.debug('Make Draft Pick [' + pick.id + ']', $scope.draftCtx.currentPick);
+                break;
               }
-            });
+
+            }
           });
       }
 

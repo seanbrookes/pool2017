@@ -11,7 +11,7 @@ Chat.controller('ChatMainController', [
     }
 
     $scope.isChatDisabled = function() {
-      if ($scope.currentUser) {
+      if (window.localStorage.getItem('homeRoster')) {
         return false;
       }
       return true;
