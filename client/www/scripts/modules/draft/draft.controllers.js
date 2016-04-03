@@ -6,11 +6,13 @@ Draft.controller('DraftMainController',[
   'Draftpick',
   'DraftServices',
   'RosterService',
+  'socket',
   '$log',
-  function($scope, Draftpick, DraftServices, RosterService, $log){
+  function($scope, Draftpick, DraftServices, RosterService, socket, $log){
     console.log('Draft Main Controller');
 
     $scope.ePlayer = {status:'drafted'};
+    $scope.isLoadBoard = false;
     $scope.draftPicks = [];
     $scope.draftCtx = {currentPick:{}};
     $scope.draftCtx.currentPickRoster = 'mashers';
@@ -28,12 +30,21 @@ Draft.controller('DraftMainController',[
 
           }
           $scope.draftPicks = response;
+
         });
 
     }
     function resetCurrentPick() {
       $scope.draftCtx.currentPick = {};
     }
+    function init() {
+      resetCurrentPick();
+      loadBoard();
+      socket.on('draftPickUpdate', function() {
+        loadBoard();
+      });
+    }
+
 
     $scope.clearPick = function(pick) {
       if (confirm('clear pick?')) {
@@ -112,6 +123,9 @@ Draft.controller('DraftMainController',[
       return returnClass;
     };
 
+    //$scope.$watch('isLoadBoard', function(newVal, oldVal) {
+    //  loadBoard();
+    //});
     $scope.updatePickRoster = function(pick) {
       if (pick && pick.roster) {
         Draftpick.upsert(pick)
@@ -265,7 +279,7 @@ Draft.controller('DraftMainController',[
     //  ]
     //
     //};
-    loadBoard();
+    init();
 
   }
 ]);

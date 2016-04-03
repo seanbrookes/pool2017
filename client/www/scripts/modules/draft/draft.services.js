@@ -1,7 +1,8 @@
 Draft.service('DraftServices', [
   '$log',
   'Draftpick',
-  function($log, Draftpick) {
+  'socket',
+  function($log, Draftpick, socket) {
     var svc = this;
     svc.getDraftBoard = function(filter) {
       if (!filter) {
@@ -21,6 +22,7 @@ Draft.service('DraftServices', [
         delete pick._id;
         return Draftpick.upsert(pick,
           function(response){
+            socket.emit('draftPickUpdate', pick);
 
             return response;
 
