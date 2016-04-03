@@ -37,7 +37,9 @@
         <button class="SilentButton" ng-click="clearPick(pick)">{{ pick.pickNumber }}</button>
       </td>
       <td class="DraftPickCell DraftPickCell__Roster">
-        {{pick.roster}}
+        <button class="SilentButton" ng-click="postToRoster(pick.roster, pick)">{{pick.roster}}</button>
+
+        <!--{{pick.roster}}-->
         <!--<select  ng-change="updatePickRoster(pick)" ng-model="pick.roster">-->
         <!--<option value="bashers">bashers</option>-->
         <!--<option value="mashers">mashers</option>-->

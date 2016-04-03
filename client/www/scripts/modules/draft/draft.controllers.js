@@ -107,6 +107,57 @@ Draft.controller('DraftMainController',[
       $scope.ePick = pick;
     };
 
+    $scope.postToRoster = function(slug, pick) {
+      if (confirm('post to roster?')) {
+        $log.debug('post to roster [' + slug + ']', pick);
+
+        // add this player to a roster
+
+        // get roster
+
+        var thisRoster = RosterService.getRoster(slug)
+        .then(function(response) {
+          var isUnique = true;
+          thisRoster = response;
+          if (thisRoster.players) {
+            thisRoster.players.map(function(player) {
+              if (player.name === pick.name) {
+                isUnique = false;
+              }
+            });
+
+            if (isUnique) {
+              var thePick = {
+                name:pick.name,
+                pos:pick.pos,
+                team:pick.team,
+                draftStatus:'protected'
+              };
+              thisRoster.players.push(thePick);
+              RosterService.updateRoster(thisRoster)
+                .$promise
+                .then(function(response) {
+                  $log.debug('Update Roster Success!');
+
+                });
+
+            }
+          }
+
+        });
+
+        //cycle through players
+
+        // if player doesn't exist (by name)
+        // add player
+
+        // save roster
+
+
+
+      }
+    };
+
     $scope.getDraftRowClass = function(pick) {
       var returnClass = 'DraftPickRow';
       if (pick && pick.round) {
@@ -123,7 +174,7 @@ Draft.controller('DraftMainController',[
       return returnClass;
     };
 
-    //$scope.$watch('isLoadBoard', function(newVal, oldVal) {
+    //$scope.$watch('isLoadBoard', functiopostToRostern(newVal, oldVal) {
     //  loadBoard();
     //});
     $scope.updatePickRoster = function(pick) {

@@ -589,6 +589,65 @@ Roster.controller('RosterDraftViewController', [
         }
       });
 
+      $scope.clearUnprotectedPlayers = function() {
+        if (confirm('clear the players?')) {
+          var scrubbedPlayers = [];
+
+          //bashers
+          scrubbedPlayers = [];
+          $scope.rosterDraftCtx.bashersRoster.players.map(function(player) {
+            if (player.draftStatus === 'protected') {
+              scrubbedPlayers.push(player);
+            }
+            if (player.draftStatus === 'prospect') {
+              scrubbedPlayers.push(player);
+            }
+          });
+          $scope.rosterDraftCtx.bashersRoster.players = scrubbedPlayers;
+          $scope.saveRoster($scope.rosterDraftCtx.bashersRoster);
+
+          //mashers
+          scrubbedPlayers = [];
+          $scope.rosterDraftCtx.mashersRoster.players.map(function(player) {
+            if (player.draftStatus === 'protected') {
+              scrubbedPlayers.push(player);
+            }
+            if (player.draftStatus === 'prospect') {
+              scrubbedPlayers.push(player);
+            }
+          });
+          $scope.rosterDraftCtx.mashersRoster.players = scrubbedPlayers;
+          $scope.saveRoster($scope.rosterDraftCtx.mashersRoster);
+
+          //rallycaps
+          scrubbedPlayers = [];
+          $scope.rosterDraftCtx.rallycapsRoster.players.map(function(player) {
+            if (player.draftStatus === 'protected') {
+              scrubbedPlayers.push(player);
+            }
+            if (player.draftStatus === 'prospect') {
+              scrubbedPlayers.push(player);
+            }
+          });
+          $scope.rosterDraftCtx.rallycapsRoster.players = scrubbedPlayers;
+          $scope.saveRoster($scope.rosterDraftCtx.rallycapsRoster);
+
+          //stallions
+          scrubbedPlayers = [];
+          $scope.rosterDraftCtx.stallionsRoster.players.map(function(player) {
+            if (player.draftStatus === 'protected') {
+              scrubbedPlayers.push(player);
+            }
+            if (player.draftStatus === 'prospect') {
+              scrubbedPlayers.push(player);
+            }
+          });
+          $scope.rosterDraftCtx.stallionsRoster.players = scrubbedPlayers;
+          $scope.saveRoster($scope.rosterDraftCtx.stallionsRoster);
+
+        }
+      };
+
       protectedList = protectedList.concat(bubbleList);
       protectedList = protectedList.concat(prospectList);
       protectedList = protectedList.concat(unprotectedList);
