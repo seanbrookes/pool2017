@@ -1,10 +1,25 @@
-<div data-id="draft-home-container" class="Layout">
+<div ng-controller="RosterDraftViewController" data-id="draft-home-container" class="Layout">
   <!-- draft board -->
   <!--<bbp-draft-board></bbp-draft-board>-->
   <!-- chat column -->
   <!--<bbp-chat-main></bbp-chat-main>-->
   <!-- rosters quaters -->
 
-  <bbp-roster-draft-view></bbp-roster-draft-view>
+  <tabset type="pills">
+    <tab heading="Draft Board">
+      <div class="Layout">
+        <bbp-draft-board></bbp-draft-board>
+        <bbp-chat-window></bbp-chat-window>
+      </div>
+    </tab>
+    <tab heading="Roster Lists">
+      <bbp-roster-draft-view></bbp-roster-draft-view>
+    </tab>
+    <tab heading="Diamond View" >
+      <bbp-roster-diamond-view></bbp-roster-diamond-view>
+    </tab>
+  </tabset>
+
+
   <!--<bbp-roster-player-form></bbp-roster-player-form>-->
 </div>

@@ -7,11 +7,26 @@
     </td>
     <td>{{player.name}}</td>
     <td>
-      {{player.pos}}
+      <select id="PosSelect"
+              ng-change="updatePlayerPos(roster)"
+              ng-model="player.pos" >
+        <option value="C">C</option>
+        <option value="1B">1B</option>
+        <option value="2B">2B</option>
+        <option value="3B">3B</option>
+        <option value="SS">SS</option>
+        <option value="LF">LF</option>
+        <option value="CF">CF</option>
+        <option value="RF">RF</option>
+        <option value="DH">DH</option>
+        <option value="SP">SP</option>
+        <option value="RP">RP</option>
+      </select>
     </td>
     <td>{{player.team}}</td>
     <td>
-      <select ng-change="updatePlayerDraftStatus(roster)" ng-model="player.draftStatus" >
+      <select ng-change="updatePlayerDraftStatus(roster)"
+              ng-model="player.draftStatus" >
         <option value="protected">protected</option>
         <option value="bubble">bubble</option>
         <option value="unprotected">unprotected</option>

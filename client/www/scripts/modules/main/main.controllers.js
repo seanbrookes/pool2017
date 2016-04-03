@@ -21,7 +21,7 @@ Main.controller('MainController', [
 
     $scope.isDog = function(){
       if(localStorage.getItem('homeRoster')){
-        if (localStorage.getItem('homeRoster') === 'dog'){
+        if (localStorage.getItem('homeRoster') === 'bashers'){
           return true;
         }
         return false;

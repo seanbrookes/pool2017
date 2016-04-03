@@ -9,6 +9,7 @@ var Main = angular.module('Main', [
   'Common',
   'Admin',
   'Roster',
+  'Chat',
   'Draft',
   'MLB',
   'Auth',
@@ -44,6 +45,11 @@ Main.config([
         controller:'AuthUserController',
         templateUrl:'./scripts/modules/auth/templates/auth.user.html'
       })
+      .state('login', {
+        url:'/login',
+        controller:'AuthUserController',
+        templateUrl:'./scripts/modules/auth/templates/auth.login.html'
+      })
       .state('statsupdate', {
         url:'/statsupdate',
         controller:'StatsUpdateMainController',
@@ -78,6 +84,11 @@ Main.config([
         url:'/draft',
         controller:'DraftMainController',
         templateUrl:'./scripts/modules/draft/templates/draft.main.html'
+      })
+      .state('chat', {
+        url:'/chat',
+        controller:'ChatMainController',
+        templateUrl:'./scripts/modules/chat/templates/chat.main.html'
       })
       .state('admin', {
         url: '/admin',

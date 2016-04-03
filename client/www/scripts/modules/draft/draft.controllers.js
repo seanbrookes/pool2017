@@ -176,7 +176,7 @@ Draft.controller('GenListController',[
     console.log('Generate Draft List');
     var roundIndex = 1;
     var pickIndex = 1;
-    var rosterArray = ['bashers','rallycaps','mashers','stallions','stallions','mashers','rallycaps','bashers'];
+    var rosterArray = ['mashers','bashers','rallycaps','stallions','stallions','rallycaps','bashers','mashers'];
 
 
 

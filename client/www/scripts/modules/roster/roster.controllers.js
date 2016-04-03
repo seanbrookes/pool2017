@@ -597,7 +597,9 @@ Roster.controller('RosterDraftViewController', [
       return roster;
 
 
-    };
+    }
+
+
 
 
     $scope.rosterDraftCtx.bashersRoster = RosterService.getRoster('bashers')

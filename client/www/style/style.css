@@ -15,6 +15,9 @@ table {
   flex-wrap: wrap;
   justify-content: space-around;
 }
+.PageHeaderContainer {
+  display: none;
+}
 .PreDraftRosterTable {
   margin: 0 2rem 0 2rem;
   font-size: 80%;
@@ -36,6 +39,87 @@ table {
 }
 .PreDraftRosterTable tbody tr.draft-protected td {
   color: #1C9618;
+}
+.DefaultChatWindow {
+  max-width: 40rem;
+  border: 1px solid blue;
+}
+.RosterDiamondContainer {
+  position: relative;
+  border: 1px solid black;
+  width: 64rem;
+  height: 48rem;
+}
+.RosterDiamondContainer .PositionContainer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.RosterDiamondContainer .PositionContainer ul li {
+  text-decoration: underline;
+}
+.RosterDiamondContainer .LeftFieldContainer {
+  position: absolute;
+  top: 4rem;
+  left: 2rem;
+}
+.RosterDiamondContainer .CenterFieldContainer {
+  position: absolute;
+  top: 3rem;
+  left: 26rem;
+}
+.RosterDiamondContainer .RightFieldContainer {
+  position: absolute;
+  top: 4rem;
+  right: 2rem;
+}
+.RosterDiamondContainer .ThreeBContainer {
+  position: absolute;
+  top: 18rem;
+  left: 2rem;
+}
+.RosterDiamondContainer .TwoBContainer {
+  position: absolute;
+  top: 10rem;
+  left: 26rem;
+}
+.RosterDiamondContainer .OneBContainer {
+  position: absolute;
+  top: 18rem;
+  right: 2rem;
+}
+.RosterDiamondContainer .SSContainer {
+  position: absolute;
+  top: 11rem;
+  left: 10rem;
+}
+.RosterDiamondContainer .StarterContainer {
+  position: absolute;
+  top: 20rem;
+  left: 26rem;
+}
+.RosterDiamondContainer .CatcherContainer {
+  position: absolute;
+  top: 42rem;
+  left: 26rem;
+}
+.RosterDiamondContainer .DHContainer {
+  position: absolute;
+  top: 36rem;
+  right: 10rem;
+}
+.RosterDiamondContainer .RelieverContainer {
+  position: absolute;
+  top: 32rem;
+  left: 8rem;
+}
+.RosterDiamondTitle {
+  font-size: 110%;
+  font-weight: 400;
+  padding: .2rem;
+  margin: 0;
+  background-color: darkblue;
+  color: #ffffff;
 }
 .main-content-container {
   background-color: #ffffff;
