@@ -7,7 +7,7 @@ Chat.controller('ChatMainController', [
 
     $scope.currentUser = window.localStorage.getItem('homeRoster');
     if (!$scope.currentUser) {
-      alert('you need to auth as a user');
+     // alert('you need to auth as a user');
     }
 
     $scope.isChatDisabled = function() {
