@@ -43,9 +43,9 @@
             <div class="player-list-container">
               <button ng-click="pullRawBatters()">pull batters</button>
               <button ng-click="pullRawPitchers()">pull pitcher</button>
-
+              <span>{{allPlayers.length}}</span>
               <ul>
-                <li ng-repeat="player in allPlayers | orderBy:['name']">
+                <li ng-repeat="player in allPlayers | orderBy:['name']  track by $index">
                   <!--<input-->
                   <!--type="checkbox"-->
                   <!--value="{{player.mlbid}}"-->

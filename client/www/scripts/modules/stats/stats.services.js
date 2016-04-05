@@ -11,7 +11,7 @@ Stats.service('StatsServices', [
         'filter[where][roster]':rosterSlug,
         'filter[order]':'grandTotal DESC'
       };
-      Totals.query(filter)
+      Totals.find(filter)
         .$promise
         .then(function (results) {
           // process the totals against the new ones
@@ -30,6 +30,10 @@ Stats.service('StatsServices', [
 
               Totals.create(latestTotals);
             }
+          }
+          else {
+            // first update of the year
+            Totals.create(latestTotals);
           }
 
             // there is at least one result

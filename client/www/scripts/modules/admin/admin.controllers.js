@@ -306,10 +306,11 @@ Admin.controller('RosterAdminController',[
 ]);
 Admin.controller('AdminMainController',[
   '$scope',
-  'Rawbatterid',
-  'Rawpitcherid',
+  'Mlbbatters',
+  'Mlbpitchers',
+  'Statupdate',
   'Roster',
-  function($scope, Rawbatterid, Rawpitcherid, Roster){
+  function($scope, Mlbbatters, Mlbpitchers, Statupdate, Roster){
     "use strict";
 
     $scope.allPlayers = [];
@@ -319,12 +320,28 @@ Admin.controller('AdminMainController',[
 
     $scope.pullRawBatters = function(){
       console.log('pull raw batters');
-      $scope.allPlayers = Rawbatterid.query();
+      $scope.allPlayers = Mlbbatters.fetchBatters({},
+        function(response) {
+          $scope.allPlayers = response.data;
+          var count = $scope.allPlayers.length;
+          var z = response.data;
+          var a = z;
+        },
+        function(error) {
+          $log.debug('bad get batters', error);
+        });
+
     };
     $scope.pullRawPitchers = function(){
       console.log('pull raw pitchers');
-      $scope.allPlayers = Rawpitcherid.query();
-
+      $scope.allPlayers = Mlbpitchers.fetchPitchers({},
+        function(response) {
+          $scope.allPlayers = response.data;
+          var count = $scope.allPlayers.length;
+        },
+        function(error) {
+          $log.debug('bad get batters', error);
+        });
     };
     $scope.getAssociatedStatus = function(player){
 
@@ -338,14 +355,14 @@ Admin.controller('AdminMainController',[
     $scope.refreshStats = function(){
       console.log('refresh stats');
 
-      //Statupdate.create({},
-      //  function(response){
-      //    console.log('good stats update: ' + JSON.stringify(response));
-      //  },
-      //  function(response){
-      //    console.log('bad stats update: ' + JSON.stringify(response));
-      //  }
-      //);
+      Statupdate.updatestats({},
+        function(response){
+          console.log('good stats update: ' + JSON.stringify(response));
+        },
+        function(response){
+          console.log('bad stats update: ' + JSON.stringify(response));
+        }
+      );
     };
 
 
@@ -405,7 +422,7 @@ Admin.controller('AdminMainController',[
       var filter = {
         'filter[where][slug]':$scope.currRoster
       };
-      $scope.currentRoster = Roster.query(filter);
+      $scope.currentRoster = Roster.find(filter);
       $scope.currentRoster.$promise.
         then(function (result) {
           $scope.currentRoster = result[0];
@@ -428,7 +445,7 @@ Admin.controller('AdminMainController',[
             var filter = {
               'filter[where][slug]':$scope.currentRosterName
             };
-            $scope.currentRoster = Roster.query(filter);
+            $scope.currentRoster = Roster.find(filter);
             $scope.currentRoster.$promise.then(function (result) {
               $scope.currentRoster = result[0];
 
@@ -466,7 +483,7 @@ Admin.controller('AdminMainController',[
             var filter = {
               'filter[where][slug]':$scope.currentRosterName
             };
-            $scope.currentRoster = Roster.query(filter);
+            $scope.currentRoster = Roster.find(filter);
             $scope.currentRoster.$promise.then(function (result) {
               $scope.currentRoster = result[0];
 
@@ -494,7 +511,7 @@ Admin.controller('AdminMainController',[
             var filter = {
               'filter[where][slug]':$scope.currentRosterName
             };
-            $scope.currentRoster = Roster.query(filter);
+            $scope.currentRoster = Roster.find(filter);
             $scope.currentRoster.$promise.then(function (result) {
               $scope.currentRoster = result[0];
 

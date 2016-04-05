@@ -15,9 +15,6 @@ table {
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.PageHeaderContainer {
-  display: none;
-}
 .PreDraftRosterTable {
   margin: 0 2rem 0 2rem;
   font-size: 80%;

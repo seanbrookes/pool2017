@@ -8,73 +8,74 @@ Common.directive('bbpTotalsChart', [
         '$log',
         'Totals',
         function($scope, $log, Totals) {
-          $scope.chartTotals = Totals.query({})
+          $scope.chartTotals = Totals.find({})
             .$promise
-            .then(function(totalsCollection) {
+            .then(function (totalsCollection) {
               $log.debug('totalsCollection');
               /*
-              *
-              * each roster:
-              * - date
-              * - grandTotal
-              *
-              * Date
-              * Roster
-              * grandTotal
-              *
-              * */
+               *
+               * each roster:
+               * - date
+               * - grandTotal
+               *
+               * Date
+               * Roster
+               * grandTotal
+               *
+               * */
               $scope.chartTotals = {
                 bashersTotals: [],
                 mashersTotals: [],
                 rallyCapsTotals: [],
                 stallionsTotals: []
               };
-            //  var parseDate = d3.time.format("%Y%m%d").parse;
-            //  function getDate(d) {
-            //    return new Date(d.jsonDate);
-            //  }
-              totalsCollection.map(function(totalItem) {
-                switch(totalItem.roster) {
+              //  var parseDate = d3.time.format("%Y%m%d").parse;
+              //  function getDate(d) {
+              //    return new Date(d.jsonDate);
+              //  }
+            if (totalsCollection && totalsCollection.map && totalsCollection.length > 0) {
+              totalsCollection.map(function (totalItem) {
+                switch (totalItem.roster) {
                   case 'bashers':
                     $scope.chartTotals.bashersTotals.push({
-                      date:new Date(totalItem.date),
-                      grandTotal:totalItem.grandTotal,
-                      starterTotal:totalItem.starterTotal,
-                      closerTotal:totalItem.closerTotal,
-                      batterTotal:totalItem.batterTotal
+                      date: new Date(totalItem.date),
+                      grandTotal: totalItem.grandTotal,
+                      starterTotal: totalItem.starterTotal,
+                      closerTotal: totalItem.closerTotal,
+                      batterTotal: totalItem.batterTotal
                     });
 
                     break;
 
                   case 'mashers':
                     $scope.chartTotals.mashersTotals.push({
-                      date:new Date(totalItem.date),
-                      grandTotal:totalItem.grandTotal,
-                      starterTotal:totalItem.starterTotal,
-                      closerTotal:totalItem.closerTotal,
-                      batterTotal:totalItem.batterTotal
+                      date: new Date(totalItem.date),
+                      grandTotal: totalItem.grandTotal,
+                      starterTotal: totalItem.starterTotal,
+                      closerTotal: totalItem.closerTotal,
+                      batterTotal: totalItem.batterTotal
                     });
 
                     break;
 
                   case 'rallycaps':
                     $scope.chartTotals.rallyCapsTotals.push({
-                      date:new Date(totalItem.date),
-                      grandTotal:totalItem.grandTotal,
-                      starterTotal:totalItem.starterTotal,
-                      closerTotal:totalItem.closerTotal,
-                      batterTotal:totalItem.batterTotal
+                      date: new Date(totalItem.date),
+                      grandTotal: totalItem.grandTotal,
+                      starterTotal: totalItem.starterTotal,
+                      closerTotal: totalItem.closerTotal,
+                      batterTotal: totalItem.batterTotal
                     });
 
                     break;
 
                   case 'stallions':
                     $scope.chartTotals.stallionsTotals.push({
-                      date:new Date(totalItem.date),
-                      grandTotal:totalItem.grandTotal,
-                      starterTotal:totalItem.starterTotal,
-                      closerTotal:totalItem.closerTotal,
-                      batterTotal:totalItem.batterTotal
+                      date: new Date(totalItem.date),
+                      grandTotal: totalItem.grandTotal,
+                      starterTotal: totalItem.starterTotal,
+                      closerTotal: totalItem.closerTotal,
+                      batterTotal: totalItem.batterTotal
                     });
 
                     break;
@@ -116,17 +117,15 @@ Common.directive('bbpTotalsChart', [
               vis.append("svg:g")
                 .attr("class", "y axis")
                 .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-                .style({ 'stroke': '#444444', 'fill': 'none', 'stroke-width': '1px'})
+                .style({'stroke': '#444444', 'fill': 'none', 'stroke-width': '1px'})
                 .call(yAxis);
 
 
-
-
               var lineGen = d3.svg.line()
-                .x(function(d) {
+                .x(function (d) {
                   return xScale(d.date);
                 })
-                .y(function(d) {
+                .y(function (d) {
                   return yScale(d.grandTotal);
                 })
                 .interpolate("basis");
@@ -156,11 +155,11 @@ Common.directive('bbpTotalsChart', [
                 .attr('class', 'legend');
               // BASHERS
               pl.append('rect')
-                .attr('x',  WIDTH - 200)
+                .attr('x', WIDTH - 200)
                 .attr('y', 200)
                 .attr('width', 20)
                 .attr('height', 20)
-                .style('fill', function(d) {
+                .style('fill', function (d) {
                   return 'blue';
                 });
               pl.append('text')
@@ -168,17 +167,19 @@ Common.directive('bbpTotalsChart', [
                 .attr('y', HEIGHT - 285)
                 .attr('width', 200)
                 .attr('height', 20)
-                .text(function(d){ return 'Bashers'; })
-                .style('fill', function(d) {
+                .text(function (d) {
+                  return 'Bashers';
+                })
+                .style('fill', function (d) {
                   return 'orange';
                 });
               // MASHERS
               pl.append('rect')
-                .attr('x',  WIDTH - 200)
+                .attr('x', WIDTH - 200)
                 .attr('y', 230)
                 .attr('width', 20)
                 .attr('height', 20)
-                .style('fill', function(d) {
+                .style('fill', function (d) {
                   return 'green';
                 });
               pl.append('text')
@@ -186,17 +187,19 @@ Common.directive('bbpTotalsChart', [
                 .attr('y', HEIGHT - 255)
                 .attr('width', 200)
                 .attr('height', 20)
-                .text(function(d){ return 'Mashers'; })
-                .style('fill', function(d) {
+                .text(function (d) {
+                  return 'Mashers';
+                })
+                .style('fill', function (d) {
                   return 'orange';
                 });
               // RALLY CAPS
               pl.append('rect')
-                .attr('x',  WIDTH - 200)
+                .attr('x', WIDTH - 200)
                 .attr('y', 260)
                 .attr('width', 20)
                 .attr('height', 20)
-                .style('fill', function(d) {
+                .style('fill', function (d) {
                   return 'red';
                 });
               pl.append('text')
@@ -204,17 +207,19 @@ Common.directive('bbpTotalsChart', [
                 .attr('y', HEIGHT - 225)
                 .attr('width', 200)
                 .attr('height', 20)
-                .text(function(d){ return 'Rally Caps'; })
-                .style('fill', function(d) {
+                .text(function (d) {
+                  return 'Rally Caps';
+                })
+                .style('fill', function (d) {
                   return 'orange';
                 });
               // STALLIONS
               pl.append('rect')
-                .attr('x',  WIDTH - 200)
+                .attr('x', WIDTH - 200)
                 .attr('y', 290)
                 .attr('width', 20)
                 .attr('height', 20)
-                .style('fill', function(d) {
+                .style('fill', function (d) {
                   return 'grey';
                 });
               pl.append('text')
@@ -222,11 +227,17 @@ Common.directive('bbpTotalsChart', [
                 .attr('y', HEIGHT - 195)
                 .attr('width', 200)
                 .attr('height', 20)
-                .text(function(d){ return 'Stallions'; })
-                .style('fill', function(d) {
+                .text(function (d) {
+                  return 'Stallions';
+                })
+                .style('fill', function (d) {
                   return 'orange';
                 });
-             });
+
+            }
+            });
+
+
         }
       ],
       link: function(scope, el, attrs) {
@@ -249,7 +260,7 @@ Common.directive('grandTotalsSummaryList', [
             'filter[order]':'date DESC'
           };
 
-          var initTotals = Totals.query(filter);
+          var initTotals = Totals.find(filter);
           initTotals
             .$promise
             .then(function (result) {
@@ -513,7 +524,7 @@ Common.directive('generalTotalsSummaryList', [
         function($scope){
           var filter = {};
 
-          $scope.rosters = Totals.query(filter);
+          $scope.rosters = Totals.find(filter);
           $scope.rosters.$promise.
             then(function (result) {
               $scope.rosters = result;

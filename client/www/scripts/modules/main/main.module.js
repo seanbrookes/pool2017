@@ -30,10 +30,10 @@ Main.config([
     $stateProvider
       .state('home', {
         url: '/',
-        //templateUrl: './scripts/modules/main/templates/main.html',
-        //controller: 'MainController'
-        controller:'DraftMainController',
-        templateUrl:'./scripts/modules/draft/templates/draft.main.html'
+        templateUrl: './scripts/modules/main/templates/main.html',
+        controller: 'MainController'
+        //controller:'DraftMainController',
+        //templateUrl:'./scripts/modules/draft/templates/draft.main.html'
       })
       .state('roster', {
         url:'/roster/:slug',

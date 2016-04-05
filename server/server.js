@@ -50,7 +50,6 @@ boot(app, __dirname, function(err) {
       app.io.emit('chat message', data);
     });
     socket.on('draftPickUpdate', function(data) {
-      console.log('DRAFT UPDATES');
       socket.broadcast.emit('draftPickUpdate');
     });
 

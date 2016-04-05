@@ -10,9 +10,9 @@ module.exports = function(Statupdate) {
 
 
   //var battersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2015&sort_order=%27desc%27&sort_column=%27avg%27&stat_type=hitting&page_type=SortablePlayer&game_type=%27R%27&player_pool=QUALIFIER&season_type=ANY&league_code=%27AL%27&sport_code=%27mlb%27&results=1000&recSP=1&recPP=999"; 
-  var nlBattersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2015&sort_order=%27desc%27&sort_column=%27g%27&stat_type=hitting&page_type=SortablePlayer&game_type=%27R%27&player_pool=QUALIFIER&season_type=ANY&league_code=%27NL%27&sport_code=%27mlb%27&results=1000&recSP=1&recPP=999"; 
-  var battersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2015&sort_order=%27desc%27&sort_column=%27g%27&stat_type=hitting&page_type=SortablePlayer&game_type=%27R%27&player_pool=QUALIFIER&season_type=ANY&league_code=%27AL%27&sport_code=%27mlb%27&results=1000&recSP=1&recPP=999"; 
-  var pitchersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2015&sort_order=%27desc%27&sort_column=%27sv%27&stat_type=pitching&page_type=SortablePlayer&game_type=%27R%27&player_pool=ALL&season_type=ANY&league_code=%27AL%27&sport_code=%27mlb%27&results=1000&position=%271%27&recSP=1&recPP=999"; 
+  var nlBattersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2016&sort_order=%27desc%27&sort_column=%27g%27&stat_type=hitting&page_type=SortablePlayer&game_type=%27R%27&player_pool=QUALIFIER&season_type=ANY&league_code=%27NL%27&sport_code=%27mlb%27&results=1000&recSP=1&recPP=999"; 
+  var battersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2016&sort_order=%27desc%27&sort_column=%27g%27&stat_type=hitting&page_type=SortablePlayer&game_type=%27R%27&player_pool=QUALIFIER&season_type=ANY&league_code=%27AL%27&sport_code=%27mlb%27&results=1000&recSP=1&recPP=999"; 
+  var pitchersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2016&sort_order=%27desc%27&sort_column=%27sv%27&stat_type=pitching&page_type=SortablePlayer&game_type=%27R%27&player_pool=ALL&season_type=ANY&league_code=%27AL%27&sport_code=%27mlb%27&results=1000&position=%271%27&recSP=1&recPP=999"; 
 
 
 
@@ -95,7 +95,7 @@ module.exports = function(Statupdate) {
          * process the nl batters first
          *
          * */
-        var nlArray = ["408314", "493316", "461235"];
+        var nlArray = [];
         var nlPlayerTotals = [];
 
          // batters
@@ -488,8 +488,8 @@ module.exports = function(Statupdate) {
 
               StatUpdate.create({}, statUpdateObj,
                 function(response){
-                  //console.log('yay added stat update');
-                  return cb(null, JSON.stringify(statUpdateObj));
+                  console.log('yay added stat update');
+                  cb(null, statUpdateObj);
                 },
                 function(response){
                   console.log('sad no stat update: ' + JSON.stringify(response));
