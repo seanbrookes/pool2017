@@ -255,20 +255,27 @@ div {
     }
   }
 }
-.general-totals-container {
-  display:inline-block;
-}
 .roster-container {
+
   h2 {
     margin-top:0;
   }
+
+
 }
 .main-content-container {
 
-  display:inline-block;
+  padding-left:2rem;
+
 
   h3 {
     margin-top:0;
+  }
+}
+.GeneralTotalsContainer {
+  justify-content: flex-start;
+  .GeneralTotalItemContainer {
+    padding:.5rem 1rem .5rem 1rem;
   }
 }
 .x.axis path {
@@ -283,10 +290,15 @@ div {
 //  stroke: 1;
 //}
 
-.flex-container {
+.Layout {
   display:flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  justify-content: flex-start;
+
+  &--Wrap {
+    flex-wrap: wrap;
+  }
 
 
 

@@ -95,474 +95,363 @@ module.exports = function(Statupdate) {
          * process the nl batters first
          *
          * */
-        var nlArray = [];
-        var nlPlayerTotals = [];
+        request({uri: battersUrl}, function(err, response, body){
 
-         // batters
-        request({uri: nlBattersUrl}, function(err, response, NLbody){
+          if(err){
+            console.log('batter Request error: ' + err);
+            //return res.send(500,'there was an error: ' +response.statusCode  + ' : ' + err);
+          }
 
-            if(err){
-              console.log('NL batter Request error: ' + err);
-              //return res.send(500,'there was an error: ' +response.statusCode  + ' : ' + err);
-            }
 
-            /*
+          var hitterPayload = {};
+          hitterPayload.data = body;
+          hitterPayload.metadata = {};
 
-             * 408314
-             * 493316
-             * 461235
-             *
-             * */
-            var NLhitterPayload = {};
-            NLhitterPayload.data = NLbody;
-            NLhitterPayload.metadata = {};
+          var batterStatObj = JSON.parse(hitterPayload.data);
 
-            var NLbatterStatObj = JSON.parse(NLhitterPayload.data);
-            NLlatestHittingStats = NLbatterStatObj.stats_sortable_player.queryResults.row;
-            NLhittingStatCount = NLlatestHittingStats.length;
+          latestHittingStats = batterStatObj.stats_sortable_player.queryResults.row;
+          hittingStatCount = latestHittingStats.length;
 
 
-            for (var x = 0;x < nlArray.length;x++) {
+          /*
+           *
+           * we have all the stats and rosters now we should be able to loop over them
+           *
+           *
+           * */
 
 
-            for (var j = 0;j < NLhittingStatCount;j++) {
+          for (var i = 0;i < rostersArray.length;i++){
+            var targetRoster = rostersArray[i];
+            console.log('|------------------------------------');
+            console.log('|');
+            console.log('|');
+            console.log('| start ROSTER [' + targetRoster.slug + '|');
+            console.log('|');
+            console.log('|');
+            console.log('|------------------------------------');
+            console.log('|');
 
-              if (NLlatestHittingStats[j].player_id === nlArray[x]) {
+            var rosterPlayers = targetRoster.players;
+            if (rosterPlayers && rosterPlayers.length) {
 
-                nlPlayerTotals.push(NLlatestHittingStats[j]);
-                //console.log('--------------------------------------------');
-                //console.log('--------------------------------------------');
-                //console.log('--------------------NL  (' + NLlatestHittingStats[j].player_id + ')--------------------');
-                //console.log('--------------------------------------------');
-                //console.log('--------------------------------------------');
 
-              }
+              for (var k = 0;k < rosterPlayers.length;k++){
 
+                var currentPlayer = targetRoster.players[k];
+                //console.log('DO STATS FOR THIS PLAYER [' + currentPlayer.posType + ']');
 
+                var pI = 0; // pitcher iterator
+                var hI = 0; // hitter iterator
+                /*
+                 *
+                 *
+                 * HITTERS
+                 *
+                 * */
+                // iterate over batting stats
+                if (currentPlayer.posType === 'hitter'){
 
 
-            }
 
-            }
 
+                  if (currentPlayer.mlbid){
+                    for (hI = 0;hI < hittingStatCount;hI++){
+                      //console.log('THIS PLAYER IS A HITTER ' + latestHittingStats[hI].player_id );
 
-            request({uri: battersUrl}, function(err, response, body){
+                      var currRawHitter = latestHittingStats[hI];
 
-              if(err){
-                console.log('batter Request error: ' + err);
-                //return res.send(500,'there was an error: ' +response.statusCode  + ' : ' + err);
-              }
+                      /*
+                       *
+                       * MATCHING ROSTER HITTER
+                       *
+                       * */
+                      if (currRawHitter.player_id === currentPlayer.mlbid){
+                        // console.log('[' + currentPlayer.name + ']');
 
-
-              var hitterPayload = {};
-              hitterPayload.data = body;
-              hitterPayload.metadata = {};
-
-              var batterStatObj = JSON.parse(hitterPayload.data);
-
-              latestHittingStats = batterStatObj.stats_sortable_player.queryResults.row;
-              hittingStatCount = latestHittingStats.length;
-
-
-              /*
-               *
-               * we have all the stats and rosters now we should be able to loop over them
-               *
-               *
-               * */
-
-
-              for (var i = 0;i < rostersArray.length;i++){
-                var targetRoster = rostersArray[i];
-                console.log('|------------------------------------');
-                console.log('|');
-                console.log('|');
-                console.log('| start ROSTER [' + targetRoster.slug + '|');
-                console.log('|');
-                console.log('|');
-                console.log('|------------------------------------');
-                console.log('|');
-
-                var rosterPlayers = targetRoster.players;
-                if (rosterPlayers && rosterPlayers.length) {
-
-
-                  for (var k = 0;k < rosterPlayers.length;k++){
-
-                    var currentPlayer = targetRoster.players[k];
-                    //console.log('DO STATS FOR THIS PLAYER [' + currentPlayer.posType + ']');
-
-                    var pI = 0; // pitcher iterator
-                    var hI = 0; // hitter iterator
-                    /*
-                     *
-                     *
-                     * HITTERS
-                     *
-                     * */
-                    // iterate over batting stats
-                    if (currentPlayer.posType === 'hitter'){
-
-
-
-
-                      if (currentPlayer.mlbid){
-                        for (hI = 0;hI < hittingStatCount;hI++){
-                          //console.log('THIS PLAYER IS A HITTER ' + latestHittingStats[hI].player_id );
-
-                          var currRawHitter = latestHittingStats[hI];
-
-                          /*
-                           *
-                           * MATCHING ROSTER HITTER
-                           *
-                           * */
-                          if (currRawHitter.player_id === currentPlayer.mlbid){
-                            // console.log('[' + currentPlayer.name + ']');
-
-                            var hitterStatPackageObj = {
-                              date: statsDate,
-                              lastUpdate: Date.now(),
-                              mlbid: currentPlayer.mlbid,
-                              name: currentPlayer.name,
-                              roster: targetRoster.slug,
-                              rosterStatus: currentPlayer.status,
-                              team: currRawHitter.team,
-                              pos: currentPlayer.pos,
-                              r: currRawHitter.r,
-                              h: currRawHitter.h,
-                              rbi: currRawHitter.rbi,
-                              hr: currRawHitter.hr,
-                              sb: currRawHitter.sb
-                            };
-
-
-                            hitterStatPackageObj.total = getHitterTotal(hitterStatPackageObj);
-
-
-                            //console.log('| create L stat entry: ' + hitterStatPackageObj.rosterStatus);
-                            if (hitterStatPackageObj.rosterStatus === 'nl') {
-
-                              for (var t = 0;t < nlPlayerTotals.length;t++) {
-                                if (nlPlayerTotals[t].player_id === hitterStatPackageObj.mlbid) {
-                                  console.log('| create stat entry xxxxxxx: ' + JSON.stringify(hitterStatPackageObj));
-
-                                  hitterStatPackageObj.r = (parseInt(hitterStatPackageObj.r) + parseInt(nlPlayerTotals[t].r));
-                                  hitterStatPackageObj.h = (parseInt(hitterStatPackageObj.h) + parseInt(nlPlayerTotals[t].h));
-                                  hitterStatPackageObj.hr = (parseInt(hitterStatPackageObj.hr) + parseInt(nlPlayerTotals[t].hr));
-                                  hitterStatPackageObj.rbi = (parseInt(hitterStatPackageObj.rbi) + parseInt(nlPlayerTotals[t].rbi));
-                                  hitterStatPackageObj.sb = (parseInt(hitterStatPackageObj.sb) + parseInt(nlPlayerTotals[t].sb));
-                                }
-                              }
-
-                            }
-
-
-
-
-
-
-
-                            DailyBatterStat.create(hitterStatPackageObj, function(err,response){
-                                if (err) {
-                                  console.log('sad no stat: ' + JSON.stringify(response));
-                                }
-                                // console.log('yay added stat [batter w/mlbid: ' + JSON.stringify(response));
-                              });
-
-
-
-
-
-
-
-
-
-
-
-
-                            break;
-                          }
-
-                        }
-                      }
-                      else {
-                        var LhitterStatPackageObj = {
+                        var hitterStatPackageObj = {
                           date: statsDate,
                           lastUpdate: Date.now(),
+                          mlbid: currentPlayer.mlbid,
                           name: currentPlayer.name,
                           roster: targetRoster.slug,
                           rosterStatus: currentPlayer.status,
-                          team: currentPlayer.team,
+                          team: currRawHitter.team,
                           pos: currentPlayer.pos,
-                          r: 0,
-                          h: 0,
-                          rbi: 0,
-                          hr: 0,
-                          sb: 0
+                          r: currRawHitter.r,
+                          h: currRawHitter.h,
+                          rbi: currRawHitter.rbi,
+                          hr: currRawHitter.hr,
+                          sb: currRawHitter.sb
                         };
 
 
-                        LhitterStatPackageObj.total = 0;
-
-                        console.log('| create L stat entry: ' + LhitterStatPackageObj.rosterStatus);
-                        if (LhitterStatPackageObj.rosterStatus === 'nl') {
+                        hitterStatPackageObj.total = getHitterTotal(hitterStatPackageObj);
 
 
-                          console.log('| create L stat entry: ' + JSON.stringify(LhitterStatPackageObj));
+                        //console.log('| create L stat entry: ' + hitterStatPackageObj.rosterStatus);
+                        if (hitterStatPackageObj.rosterStatus === 'nl') {
 
+                          for (var t = 0;t < nlPlayerTotals.length;t++) {
+                            if (nlPlayerTotals[t].player_id === hitterStatPackageObj.mlbid) {
+                              console.log('| create stat entry xxxxxxx: ' + JSON.stringify(hitterStatPackageObj));
 
-                        }
-
-
-
-
-
-                        DailyBatterStat.create(LhitterStatPackageObj, function(err, response){
-                            if (err) {
-                              console.log('sad no stat: ' + JSON.stringify(response));
+                              hitterStatPackageObj.r = (parseInt(hitterStatPackageObj.r) + parseInt(nlPlayerTotals[t].r));
+                              hitterStatPackageObj.h = (parseInt(hitterStatPackageObj.h) + parseInt(nlPlayerTotals[t].h));
+                              hitterStatPackageObj.hr = (parseInt(hitterStatPackageObj.hr) + parseInt(nlPlayerTotals[t].hr));
+                              hitterStatPackageObj.rbi = (parseInt(hitterStatPackageObj.rbi) + parseInt(nlPlayerTotals[t].rbi));
+                              hitterStatPackageObj.sb = (parseInt(hitterStatPackageObj.sb) + parseInt(nlPlayerTotals[t].sb));
                             }
-                           // console.log('yay added stat batter no mlbid: ' + JSON.stringify(response));
-                          });
-
-
-
-
-
-
-
-
-                      }
-
-
-
-                    }
-                    /*
-                     *
-                     * PITCHERS
-                     *
-                     * */
-                    else {
-
-                      if (currentPlayer.mlbid){
-                        for (pI = 0;pI < pitchingStatCount;pI++){
-                          var currRawPitcher = latestPitchingStats[pI];
-                          // console.log('currRawPitcher: ' + JSON.stringify(currRawPitcher));
-
-                          /*
-                           *
-                           * MATCHING ROSTER PITCHER
-                           *
-                           * */
-                          if (currRawPitcher.player_id === currentPlayer.mlbid){
-                            // console.log('[' + currentPlayer.name + ']');
-
-
-                            var pitcherStatPackageObj = {
-                              date: statsDate,
-                              lastUpdate: Date.now(),
-                              mlbid: currentPlayer.mlbid,
-                              name: currentPlayer.name,
-                              roster: targetRoster.slug,
-                              rosterStatus: currentPlayer.status,
-                              team: currRawPitcher.team,
-                              pos: currentPlayer.pos,
-                              w: currRawPitcher.w,
-                              l: currRawPitcher.l,
-                              k: currRawPitcher.so,
-                              sv: currRawPitcher.sv,
-                              ip: currRawPitcher.ip
-                            };
-
-                            var pitcherTotal = 0;
-                            // figure out if closer or starter
-                            if (currentPlayer.pos.toLowerCase() == 'sp'){
-                              pitcherStatPackageObj.total = getStarterTotal(pitcherStatPackageObj);
-                            }
-                            else if (currentPlayer.pos.toLowerCase() === 'rp'){
-                              pitcherStatPackageObj.total = getCloserTotal(pitcherStatPackageObj);
-                            }
-                            else {
-                              console.log('cannot determine pitcher type:' + JSON.stringify(currentPlayer) );
-                            }
-
-
-                            //console.log('| create stat entry: ' + JSON.stringify(pitcherStatPackageObj));
-
-
-
-
-
-
-
-                            DailyPitcherStat.create(pitcherStatPackageObj, function(err, response){
-                                if (err) {
-                                  console.log('sad no stat: ' + JSON.stringify(response));
-                                }
-                                // console.log('yay added pitcher pitcher w/mlbid: ' + JSON.stringify(response));
-                              });
-
-
-
-
-
-
-
-
-                            break;
                           }
+
                         }
+
+
+
+
+
+
+
+                        DailyBatterStat.create(hitterStatPackageObj, function(err,response){
+                          if (err) {
+                            console.log('sad no stat: ' + JSON.stringify(response));
+                          }
+                          // console.log('yay added stat [batter w/mlbid: ' + JSON.stringify(response));
+                        });
+
+
+
+
+
+
+
+
+
+
+
+
+                        break;
                       }
-                      else {
-
-                        // non mlbid player
-
-                        var LpitcherStatPackageObj = {
-                          date: statsDate,
-                          lastUpdate: Date.now(),
-                          name: currentPlayer.name,
-                          roster: targetRoster.slug,
-                          rosterStatus: currentPlayer.status,
-                          team: currentPlayer.team,
-                          pos: currentPlayer.pos,
-                          w: 0,
-                          l: 0,
-                          k: 0,
-                          sv: 0,
-                          ip: 0,
-                          total: 0
-                        };
-
-                        //console.log('| create stat entry: ' + JSON.stringify(LpitcherStatPackageObj));
-
-
-
-
-                        DailyPitcherStat.create(LpitcherStatPackageObj, function(err, response){
-                            if (err) {
-                              console.log('sad no stat: ' + JSON.stringify(response));
-                            }
-                           // console.log('yay added pitcher pitcher no mlbid: ' + JSON.stringify(response));
-                          });
-
-
-
-
-
-
-
-
-                      }
-
-
 
                     }
+                  }
+                  else {
+                    var LhitterStatPackageObj = {
+                      date: statsDate,
+                      lastUpdate: Date.now(),
+                      name: currentPlayer.name,
+                      roster: targetRoster.slug,
+                      rosterStatus: currentPlayer.status,
+                      team: currentPlayer.team,
+                      pos: currentPlayer.pos,
+                      r: 0,
+                      h: 0,
+                      rbi: 0,
+                      hr: 0,
+                      sb: 0
+                    };
+
+
+                    LhitterStatPackageObj.total = 0;
+
+                    //console.log('| create L stat entry: ', LhitterStatPackageObj);
 
 
 
-                    // iterate over pitching stats
+
+
+
+                    DailyBatterStat.create(LhitterStatPackageObj, function(err, response){
+                      if (err) {
+                        console.log('sad no stat: ' + JSON.stringify(response));
+                      }
+                      // console.log('yay added stat batter no mlbid: ' + JSON.stringify(response));
+                    });
+
+
+
+
+
+
+
 
                   }
 
-                  // console.log('|');
-                  // console.log('| end save this roster [' + targetRoster.slug + ']');
-                  // console.log('|');
+
 
                 }
+                /*
+                 *
+                 * PITCHERS
+                 *
+                 * */
+                else {
+
+                  if (currentPlayer.mlbid){
+                    for (pI = 0;pI < pitchingStatCount;pI++){
+                      var currRawPitcher = latestPitchingStats[pI];
+                      // console.log('currRawPitcher: ' + JSON.stringify(currRawPitcher));
+
+                      /*
+                       *
+                       * MATCHING ROSTER PITCHER
+                       *
+                       * */
+                      if (currRawPitcher.player_id === currentPlayer.mlbid){
+                        // console.log('[' + currentPlayer.name + ']');
+
+
+                        var pitcherStatPackageObj = {
+                          date: statsDate,
+                          lastUpdate: Date.now(),
+                          mlbid: currentPlayer.mlbid,
+                          name: currentPlayer.name,
+                          roster: targetRoster.slug,
+                          rosterStatus: currentPlayer.status,
+                          team: currRawPitcher.team,
+                          pos: currentPlayer.pos,
+                          w: currRawPitcher.w,
+                          l: currRawPitcher.l,
+                          k: currRawPitcher.so,
+                          sv: currRawPitcher.sv,
+                          ip: currRawPitcher.ip
+                        };
+
+                        var pitcherTotal = 0;
+                        // figure out if closer or starter
+                        if (currentPlayer.pos.toLowerCase() == 'sp'){
+                          pitcherStatPackageObj.total = getStarterTotal(pitcherStatPackageObj);
+                        }
+                        else if (currentPlayer.pos.toLowerCase() === 'rp'){
+                          pitcherStatPackageObj.total = getCloserTotal(pitcherStatPackageObj);
+                        }
+                        else {
+                          console.log('cannot determine pitcher type:' + JSON.stringify(currentPlayer) );
+                        }
+
+
+                        //console.log('| create stat entry: ' + JSON.stringify(pitcherStatPackageObj));
+
+
+
+
+
+
+
+                        DailyPitcherStat.create(pitcherStatPackageObj, function(err, response){
+                          if (err) {
+                            console.log('sad no stat: ' + JSON.stringify(response));
+                          }
+                          // console.log('yay added pitcher pitcher w/mlbid: ' + JSON.stringify(response));
+                        });
+
+
+
+
+
+
+
+
+                        break;
+                      }
+                    }
+                  }
+                  else {
+
+                    // non mlbid player
+
+                    var LpitcherStatPackageObj = {
+                      date: statsDate,
+                      lastUpdate: Date.now(),
+                      name: currentPlayer.name,
+                      roster: targetRoster.slug,
+                      rosterStatus: currentPlayer.status,
+                      team: currentPlayer.team,
+                      pos: currentPlayer.pos,
+                      w: 0,
+                      l: 0,
+                      k: 0,
+                      sv: 0,
+                      ip: 0,
+                      total: 0
+                    };
+
+                    //console.log('| create stat entry: ' + JSON.stringify(LpitcherStatPackageObj));
+
+
+
+
+                    DailyPitcherStat.create(LpitcherStatPackageObj, function(err, response){
+                      if (err) {
+                        console.log('sad no stat: ' + JSON.stringify(response));
+                      }
+                      // console.log('yay added pitcher pitcher no mlbid: ' + JSON.stringify(response));
+                    });
+
+
+
+
+
+
+
+
+                  }
+
+
+
+                }
+
+
+
+                // iterate over pitching stats
 
               }
 
-              var statUpdateObj = {
-                date:Date.now(),
-                status:'good',
-                type:'stats'
-              };
-
-
-
-
-
-
-
-
-
-              StatUpdate.create({}, statUpdateObj,
-                function(response){
-                  console.log('yay added stat update');
-                  cb(null, statUpdateObj);
-                },
-                function(response){
-                  console.log('sad no stat update: ' + JSON.stringify(response));
-                }
-              );
-
-
-
-
-
-
-
-
-
-
-
-
-
-            }); // end batter stats
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+              // console.log('|');
+              // console.log('| end save this roster [' + targetRoster.slug + ']');
+              // console.log('|');
+
+            }
 
           }
-        );
+
+          var statUpdateObj = {
+            date:Date.now(),
+            status:'good',
+            type:'stats'
+          };
 
 
 
 
+
+
+
+
+
+          StatUpdate.create({}, statUpdateObj,
+            function(response){
+              console.log('yay added stat update');
+              cb(null, statUpdateObj);
+            },
+            function(response){
+              console.log('sad no stat update: ' + JSON.stringify(response));
+            }
+          );
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }); // end batter stats
 
 
       });  // end pitching stats

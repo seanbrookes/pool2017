@@ -282,17 +282,20 @@ div.pos-RP .nav-rank-list li.pos-RP {
 div.pos-RP .nav-rank-list li.pos-RP a {
   color: #444444;
 }
-.general-totals-container {
-  display: inline-block;
-}
 .roster-container h2 {
   margin-top: 0;
 }
 .main-content-container {
-  display: inline-block;
+  padding-left: 2rem;
 }
 .main-content-container h3 {
   margin-top: 0;
+}
+.GeneralTotalsContainer {
+  justify-content: flex-start;
+}
+.GeneralTotalsContainer .GeneralTotalItemContainer {
+  padding: .5rem 1rem .5rem 1rem;
 }
 .x.axis path {
   display: none;
@@ -302,10 +305,14 @@ div.pos-RP .nav-rank-list li.pos-RP a {
   stroke: steelblue;
   stroke-width: 1.5px;
 }
-.flex-container {
+.Layout {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+.Layout--Wrap {
+  flex-wrap: wrap;
 }
 .side-nav-bar {
   background-color: #08592b;
