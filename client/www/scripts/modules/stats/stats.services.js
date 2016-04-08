@@ -1,8 +1,49 @@
 Stats.service('StatsServices', [
   '$log',
   'Totals',
-  function($log, Totals) {
+  'Dailybatterstat',
+  'Dailypitcherstat',
+  function($log, Totals, Dailybatterstat, Dailypitcherstat) {
     var svc = this;
+
+    svc.getBatterHistory = function(mlbid) {
+      var filter = {};
+      if (mlbid) {
+        //filter = {
+        //  'filter[where][name]':"Jose Abreu"
+        //};
+        filter = {
+          filter: { where: { mlbid: mlbid } }
+        };
+        //filter = {
+        //  'filter[where][name]':"Jose Abreu"
+        //};
+      }
+      return Dailybatterstat.find(filter)
+      .$promise
+      .then(function(response) {
+        return response;
+      })
+      .catch(function(error) {
+        $log.debug('bad get Batter History', error);
+      });
+    };
+    svc.getPitcherHistory = function(mlbid) {
+      var filter = {};
+      if (mlbid) {
+        filter = {
+          'filter[where][mlbid]':mlbid
+        };
+      }
+      return Dailypitcherstat.find(filter)
+        .$promise
+        .then(function(response) {
+          return response;
+        })
+        .catch(function(error) {
+          $log.debug('bad get Batter History', error);
+        });
+    };
 
 
     svc.processRosterTotals = function(latestTotals) {

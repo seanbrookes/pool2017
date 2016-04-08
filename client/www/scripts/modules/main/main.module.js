@@ -8,6 +8,7 @@ var Main = angular.module('Main', [
   'HelloWorld',
   'Common',
   'Admin',
+  'Charts',
   'Roster',
   'Chat',
   'Draft',
@@ -59,6 +60,11 @@ Main.config([
         url:'/mlb',
         controller:'MLBMainController',
         templateUrl:'./scripts/modules/mlb/templates/mlb.main.html'
+      })
+      .state('charts', {
+        url:'/charts',
+        controller:'ChartsMainController',
+        templateUrl:'./scripts/modules/charts/templates/charts.main.html'
       })
       .state('adminroster', {
         url:'/adminroster',

@@ -1,0 +1,23 @@
+<div>
+  Charts Main View
+  <button>Players</button>
+  <button>Rosters</button>
+  <button>Compare Players</button>
+  <button>Starters</button>
+  <button>Relievers</button>
+  <label>Pos</label>
+  <select ng-model="chartsCtx.currentPos">
+    <option value="C">C</option>
+    <option value="1B">1B</option>
+    <option value="2B">2B</option>
+    <option value="3B">3B</option>
+    <option value="SS">SS</option>
+    <option value="LF">LF</option>
+    <option value="CF">CF</option>
+    <option value="RF">RF</option>
+    <option value="DH">DH</option>
+    <option value="SP">SP</option>
+    <option value="RP">RP</option>
+  </select>
+  <bbp-player-history-list></bbp-player-history-list>
+</div>

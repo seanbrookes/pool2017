@@ -2,11 +2,12 @@ var loopback = require('loopback');
 var boot = require('loopback-boot');
 var express = require('express');
 var path = require('path');
+var explorer = require('loopback-component-explorer');
 
 var app = module.exports = loopback();
 
 app.use(express.static(path.join(__dirname, '../client/www')));
-
+app.use('/explorer', explorer.routes(app, {}));
 app.start = function() {
   // start the web server
   return app.listen(function() {

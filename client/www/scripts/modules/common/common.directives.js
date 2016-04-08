@@ -1,4 +1,4 @@
-Common.directive('bbpTotalsChart', [
+Common.directive('bbpCommonTotalsChart', [
   function() {
     return  {
       restrict: 'E',
@@ -12,6 +12,25 @@ Common.directive('bbpTotalsChart', [
             .$promise
             .then(function (totalsCollection) {
               $log.debug('totalsCollection');
+
+              var yScaleExtent = 0;
+
+              function getHighestTotal(a, b, c, d) {
+                var highValue = a;
+
+                if (b > highValue) {
+                  highValue = b;
+                }
+                if (c > highValue) {
+                  highValue = c
+                }
+                if (d > highValue) {
+                  highValue = d
+                }
+                $log.debug('high value', highValue);
+
+                return highValue;
+              }
               /*
                *
                * each roster:
@@ -86,6 +105,8 @@ Common.directive('bbpTotalsChart', [
               });
 
 
+              var highestTotal = getHighestTotal($scope.chartTotals.stallionsTotals[$scope.chartTotals.stallionsTotals.length - 1].grandTotal, $scope.chartTotals.bashersTotals[$scope.chartTotals.bashersTotals.length - 1].grandTotal, $scope.chartTotals.rallyCapsTotals[$scope.chartTotals.rallyCapsTotals.length - 1].grandTotal, $scope.chartTotals.mashersTotals[$scope.chartTotals.mashersTotals.length - 1].grandTotal)
+
               var dateRange1 = $scope.chartTotals.stallionsTotals[0].date;
               var dateRange2 = $scope.chartTotals.stallionsTotals[$scope.chartTotals.stallionsTotals.length - 1].date;
               // create and render the chart
@@ -103,7 +124,7 @@ Common.directive('bbpTotalsChart', [
                   .domain([dateRange1, dateRange2]),
                 yScale = d3.scale.linear()
                   .range([HEIGHT - MARGINS.top, MARGINS.bottom])
-                  .domain([0, $scope.chartTotals.stallionsTotals[$scope.chartTotals.stallionsTotals.length - 1].grandTotal]),
+                  .domain([0, highestTotal]),
                 xAxis = d3.svg.axis()
                   .scale(xScale),
                 yAxis = d3.svg.axis()
