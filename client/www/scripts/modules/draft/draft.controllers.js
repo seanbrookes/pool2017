@@ -38,11 +38,11 @@ Draft.controller('DraftMainController',[
       $scope.draftCtx.currentPick = {};
     }
     function init() {
-      resetCurrentPick();
-      loadBoard();
-      socket.on('draftPickUpdate', function() {
-        loadBoard();
-      });
+      //resetCurrentPick();
+      //loadBoard();
+      //socket.on('draftPickUpdate', function() {
+      //  loadBoard();
+      //});
     }
 
 

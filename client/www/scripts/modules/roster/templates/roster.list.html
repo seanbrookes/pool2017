@@ -1,16 +1,16 @@
-<table class="PreDraftRosterTable">
+<table class="RosterTable">
   <caption>{{roster.name}}</caption>
-<tbody>
-  <tr ng-class="{ 'draft-protected': $index < 12 }" data-ui-type="row" ng-repeat="player in  roster.players">
+  <tbody>
+  <tr  data-ui-type="row" ng-repeat="player in  roster.players">
     <td>
       <button class="SilentButton" ng-click="deleteRosterPlayer(roster, $index)">{{$index + 1}}</button>
     </td>
     <td>
-      <input type="text" ng-model="player.name" ng-blur="updatePlayer(roster)"/>
+      <input type="text" ng-model="player.name" ng-blur="updatePlayer(roster, $index)"/>
     </td>
     <td>
       <select id="PosSelect"
-              ng-change="updatePlayer(roster)"
+              ng-change="updatePlayer(roster, $index)"
               ng-model="player.pos" >
         <option value="C">C</option>
         <option value="1B">1B</option>
@@ -27,13 +27,14 @@
     </td>
     <td>{{player.team}}</td>
     <td>
-      <select ng-change="updatePlayerDraftStatus(roster)"
-              ng-model="player.draftStatus" >
-        <option value="protected">protected</option>
-        <option value="bubble">bubble</option>
-        <option value="unprotected">unprotected</option>
-        <option value="prospect">prospect</option>
-      </select>
+      {{player.mlbid}}
+      <!--<select ng-change="updatePlayerDraftStatus(roster)"-->
+              <!--ng-model="player.draftStatus" >-->
+        <!--<option value="protected">protected</option>-->
+        <!--<option value="bubble">bubble</option>-->
+        <!--<option value="unprotected">unprotected</option>-->
+        <!--<option value="prospect">prospect</option>-->
+      <!--</select>-->
     </td>
   </tr>
   </tbody>

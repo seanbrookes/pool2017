@@ -71,6 +71,11 @@ Main.config([
         controller:'RosterAdminController',
         templateUrl:'./scripts/modules/admin/templates/admin.roster.html'
       })
+      .state('adminstats', {
+        url:'/adminstats',
+        controller:'AdminStatsController',
+        templateUrl:'./scripts/modules/admin/templates/admin.stats.html'
+      })
       .state('protected', {
         url:'/protected/:slug',
         controller:'RosterProtectedController',

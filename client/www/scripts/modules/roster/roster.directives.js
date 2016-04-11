@@ -90,6 +90,67 @@ Roster.directive('bbpRosterDraftView', [
     }
   }
 ]);
+Roster.directive('bbpRosterListView', [
+  function() {
+    return {
+      restrict: 'E',
+      templateUrl: './scripts/modules/roster/templates/roster.list.view.html'
+    }
+  }
+]);
+Roster.directive('bbpRosterList', [
+  '$timeout',
+  function($timeout) {
+    return {
+      restrict: 'E',
+      scope: {
+        roster: '=',
+        saveRoster: '&'
+      },
+      templateUrl: './scripts/modules/roster/templates/roster.list.html',
+      controller:[
+        '$scope',
+        'RosterService',
+        function($scope, RosterService) {
+
+          $scope.deleteRosterPlayer = function(roster, playerIndex) {
+            var player = roster.players[playerIndex];
+            if (roster && player) {
+              if (confirm('delete player?')) {
+                RosterService.deleteRosterPlayer(roster, player)
+                  .then(function(response) {
+                    $log.debug('Deleted PLayer');
+                  });
+              }
+            }
+          };
+
+        }
+      ],
+      link: function(scope, el, attrs) {
+
+        //scope.$watch('roster', function(newVal, oldVal) {
+        //  var x = scope;
+        //  console.log('scope', x);
+        //});
+
+        scope.updatePlayerDraftStatus = function(roster) {
+          scope.saveRoster({roster: roster});
+          //.then(function(response) {
+          //  console.log('Saved the Roster');
+          //});
+
+        };
+        scope.updatePlayerPos = function(roster) {
+          scope.saveRoster({roster: roster});
+          // var xyz = player.pos;
+        };
+
+
+      }
+    }
+  }
+]);
 Roster.directive('bbpRosterDraftList', [
   '$timeout',
   function($timeout) {

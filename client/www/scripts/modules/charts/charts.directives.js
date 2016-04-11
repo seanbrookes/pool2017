@@ -118,10 +118,14 @@ Charts.directive('bbpPlayerHistoryList',
               })
             });
           }
+
           $scope.getPlayerHistory = function(player) {
             if (player.mlbid) {
-
+              var filter = {
+                filter: { where: { mlbid: player.mlbid } }
+              };
               if ((player.pos === 'SP') || (player.pos === 'RP')) {
+
                 $scope.currentPlayerHistory = StatsServices.getPitcherHistory(player.mlbid)
                   .then(function(response) {
                     $log.debug('pitcher history', response);
@@ -134,7 +138,7 @@ Charts.directive('bbpPlayerHistoryList',
                   });
               }
               else {
-                $scope.currentPlayerHistory = StatsServices.getBatterHistory(player.mlbid)
+                $scope.currentPlayerHistory = StatsServices.getBatterHistory(filter)
                   .then(function(response) {
                     $log.debug('batter history', response);
                     $timeout(function() {

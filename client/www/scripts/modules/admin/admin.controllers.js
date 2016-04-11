@@ -87,6 +87,13 @@ Admin.controller('AdminRawStatsController',[
 
 
 ]);
+Admin.controller('AdminStatsController', [
+  '$scope',
+  '$log',
+  function($scope, $log) {
+
+  }
+]);
 Admin.controller('RosterAdminController',[
   '$scope',
   'RosterService',
@@ -253,7 +260,21 @@ Admin.controller('RosterAdminController',[
             });
           }
           else {
-            $scope.currentRoster.players.push(player);
+            // loop over players to see if name matches
+            var isUnique = true;
+            for (var i = 0;i < $scope.currentRoster.players.length;i++) {
+              if ($scope.currentRoster.players[i].name.toLowerCase() === player.name.toLowerCase()) {
+                isUnique = false;
+                $scope.currentRoster.players[i] = player;
+                break;
+              }
+            }
+            if (isUnique) {
+              $scope.currentRoster.players.push(player);
+            }
+            else {
+
+            }
             editConfirmed = true;
           }
 
@@ -277,6 +298,8 @@ Admin.controller('RosterAdminController',[
                     status:'regular',
                     posType:'hitter'
                   };
+                  $scope.editPlayer = {};
+
                 });
               },
               function(response){

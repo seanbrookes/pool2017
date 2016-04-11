@@ -6,22 +6,109 @@ Stats.service('StatsServices', [
   function($log, Totals, Dailybatterstat, Dailypitcherstat) {
     var svc = this;
 
-    svc.getBatterHistory = function(mlbid) {
-      var filter = {};
-      if (mlbid) {
-        //filter = {
-        //  'filter[where][name]':"Jose Abreu"
-        //};
-        filter = {
-          filter: { where: { mlbid: mlbid } }
-        };
-        //filter = {
-        //  'filter[where][name]':"Jose Abreu"
-        //};
+    var currentHistoryCollection = [];
+
+    function assignUniqueDeltaTotal(playerName, delta, collection) {
+      collection.map(function(player) {
+        if (player.name === playerName) {
+          player.deltaTotal = delta;
+        }
+      });
+      return collection;
+    }
+
+
+    svc.calculateDeltaPoints = function(historyCollection) {
+
+      var whosHot = [];
+      var uniquePlayerCollection = svc.getUniquePlayers(historyCollection);
+      uniquePlayerCollection.map(function(player) {
+        var playerDelta = svc.getPlayerDelta(player.name, historyCollection);
+        $log.debug('PLAYER DELTA: ' +  playerDelta + ' ' + player.name);
+        player.deltaTotal = playerDelta;
+
+       // historyCollection = assignDeltaTotal(playerName, playerDelta, historyCollection);
+      });
+
+      return uniquePlayerCollection;
+
+    };
+    svc.getPlayerHistory = function(player) {
+      if (currentHistoryCollection) {
+        return svc.getPlayerCollection(player.name, currentHistoryCollection);
+
+      }
+      return [];
+    };
+    svc.getPlayerCollection = function(playerName, historyCollection) {
+      var retVar = [];
+      historyCollection.map(function(player) {
+        if (player.name === playerName) {
+          retVar.push(player);
+        }
+      });
+
+      return retVar;
+
+
+
+    };
+    svc.getPlayerDelta = function(playerName, historyCollection) {
+      var playerCollection = svc.getPlayerCollection(playerName, historyCollection);
+      var playerLowTotal = svc.getPLayerLowTotal(playerCollection);
+      var playerHighTotal = svc.getPLayerHighTotal(playerCollection);
+      var playerDelta = (playerHighTotal - playerLowTotal);
+      return playerDelta;
+
+    };
+
+    function isUnique(name, collection) {
+      var isUnique = true;
+      collection.map(function(item) {
+        if (item.name === name) {
+          isUnique = false;
+        }
+      });
+      return isUnique;
+    }
+    svc.getUniquePlayers = function(historyCollection) {
+      var retVar = [];
+      historyCollection.map(function(update) {
+        var isUniquePlayer = isUnique(update.name, retVar);
+        if (isUniquePlayer) {
+          retVar.push(update);
+        }
+      });
+
+      return retVar;
+    };
+    svc.getPLayerLowTotal = function(playerCollection) {
+      var lowTotal = playerCollection[0].total;
+      playerCollection.map(function(item) {
+        if (item.total < lowTotal) {
+          lowTotal = item.total;
+        }
+      });
+      return lowTotal
+    };
+    svc.getPLayerHighTotal = function(playerCollection) {
+      var highTotal = playerCollection[0].total;
+      playerCollection.map(function(item) {
+        if (item.total > highTotal) {
+          highTotal = item.total;
+        }
+      });
+      return highTotal;
+    };
+
+    svc.getBatterHistory = function(filter) {
+      if (!filter) {
+        filter = {};
       }
       return Dailybatterstat.find(filter)
       .$promise
       .then(function(response) {
+        currentHistoryCollection = response;
         return response;
       })
       .catch(function(error) {

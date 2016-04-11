@@ -450,6 +450,20 @@ div.pos-RP .nav-rank-list li.pos-RP a {
   background-color: #D5E4EA;
 }
 /*
+2016
+
+*/
+.AdminRosterNavList {
+  list-style: none;
+}
+.AdminRosterNavList li {
+  display: inline-block;
+}
+.AdminRosterNavList li button {
+  background: none;
+  border: 0;
+}
+/*
 
 Original
 
