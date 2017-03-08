@@ -27,79 +27,79 @@
     "public": false
   },
   "draftpick": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true
   },
   "roster": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true
   },
   "rawpitcherstats": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true
   },
   "rawpitcherids": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true
   },
   "rawbatterids": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true
   },
   "dailybatterstat": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true
   },
   "dailypitcherstat": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true
   },
   "statupdate": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true
   },
   "totals": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true
   },
   "chatmessage": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true
   },
   "rosterplayer": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true
   },
   "mlbbatters": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true
   },
   "mlbpitchers": {
-    "dataSource": "bbpool2016",
+    "dataSource": "bbpool2017",
     "public": true,
     "$promise": {},
     "$resolved": true

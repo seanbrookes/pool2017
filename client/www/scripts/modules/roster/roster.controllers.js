@@ -559,7 +559,8 @@ Roster.controller('RosterDraftViewController', [
   '$log',
   '$interval',
   'RosterService',
-  function($scope, $log, $interval, RosterService) {
+  '$http',
+  function($scope, $log, $interval, RosterService, $http) {
     $scope.rosterDraftCtx = {};
 
     function getDraftSort(roster) {
@@ -741,6 +742,45 @@ Roster.controller('RosterDraftViewController', [
       $scope.loadMashers();
       $scope.loadRallycaps();
       $scope.loadStallions();
+      /**
+       *
+       * code used to initialize db from previous years roster backup file
+       *
+       * */
+      //$http({
+      //  method: 'GET',
+      //  url: '/dbbackup/rosters.json'})
+      //  .then(function(response) {
+      //    $log.debug('yahoo', response);
+      //    var allPlayers = [];
+      //    response.data.map(function(roster) {
+            //RosterService.addRoster(roster)
+            //  .then(function(response) {
+            //    $log.debug('good job');
+            //  })
+            //  .catch(function(error) {
+            //    $log.warn('bad save roster', error);
+            //  });
+            //var playerArray = roster.players.map(function(player) {
+            //  player.draftStatus = 'protected';
+            //  player.slug = roster.slug;
+              //RosterService.saveRosterPlayer(player)
+              //  .then(function(response) {
+              //    $log.debug('good job');
+              //  })
+              //  .catch(function(error) {
+              //    $log.warn('bad save rosterplayer', error);
+              //  });
+            //});
+            //allPlayers.concat(playerArray);
+            //console.log('inner', allPlayers);
+
+        //  });
+        //  console.log('outer', allPlayers);
+        //}).catch(function(error) {
+        //  $log.warn('bad get roster file', error);
+        //});
+
     };
     //$scope.initBak = function() {
     //

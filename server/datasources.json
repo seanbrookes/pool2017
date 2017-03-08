@@ -3,12 +3,12 @@
     "name": "db",
     "connector": "memory"
   },
-  "bbpool2016": {
+  "bbpool2017": {
     "host": "",
     "port": 0,
-    "url": "mongodb://heroku_ch7r3zp7:jjdg6tr50u4adrvl7hgsc56q2m@ds011890.mlab.com:11890/heroku_ch7r3zp7",
-    "database": "bbpool2016",
-    "name": "bbpool2016",
+    "url": "mongodb://heroku_z753g7t9:6fnmsbs1jrcgkpt9209hthhs0c@ds013911.mlab.com:13911/heroku_z753g7t9",
+    "database": "bbpool2017",
+    "name": "bbpool2017",
     "connector": "mongodb"
   }
 }
