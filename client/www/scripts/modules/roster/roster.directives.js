@@ -253,15 +253,25 @@ Roster.directive('bbpRosterDiamond', [
           $scope.dhs = [];
           $scope.catchers = [];
 
-
-
-
-
-
-
+          $scope.getDiamondPlayerClass = function(player) {
+            if ((player.index < 12) && (player.draftStatus === 'protected')) {
+              return 'draft-protected';
+            }
+            console.log(player.name && player.draftStatus);
+            if ((player.index >= 12) && (player.draftStatus === 'protected')) {
+              return 'draft-overprotected';
+            }
+            if (player.draftStatus === 'bubble') {
+              return 'draft-bubble';
+            }
+            return '';
+          }
 
 
         }
+
+
+
       ],
       link: function(scope, el, attrs) {
 
@@ -286,8 +296,10 @@ Roster.directive('bbpRosterDiamond', [
             scope.relievers = [];
             scope.dhs = [];
             scope.catchers = [];
-            newRoster.players.map(function(player) {
+            newRoster.players.map(function(player, index) {
               if (player.draftStatus === 'protected' || player.draftStatus === 'prospect') {
+                console.log('Roster Diamond', index);
+                player.index = index;
                 switch(player.pos){
 
                   case 'LF':
