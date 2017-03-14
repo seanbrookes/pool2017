@@ -111,7 +111,8 @@ Roster.directive('bbpRosterList', [
       controller:[
         '$scope',
         'RosterService',
-        function($scope, RosterService) {
+        '$log',
+        function($scope, RosterService, $log) {
 
           $scope.deleteRosterPlayer = function(roster, playerIndex) {
             var player = roster.players[playerIndex];
@@ -124,7 +125,6 @@ Roster.directive('bbpRosterList', [
               }
             }
           };
-
         }
       ],
       link: function(scope, el, attrs) {
@@ -164,7 +164,8 @@ Roster.directive('bbpRosterDraftList', [
       controller:[
         '$scope',
         'RosterService',
-        function($scope, RosterService) {
+        '$log',
+        function($scope, RosterService, $log) {
 
           $scope.deleteRosterPlayer = function(roster, playerIndex) {
             var player = roster.players[playerIndex];
@@ -177,7 +178,19 @@ Roster.directive('bbpRosterDraftList', [
               }
             }
           };
-
+          $scope.getDraftStatusClass = function(player, index) {
+            if ((index < 12) && (player.draftStatus === 'protected')) {
+              return 'draft-protected';
+            }
+            $log.debug(player.name && player.draftStatus);
+            if ((index >= 12) && (player.draftStatus === 'protected')) {
+              return 'draft-overprotected';
+            }
+            if (player.draftStatus === 'bubble') {
+              return 'draft-bubble';
+            }
+            return '';
+          };
         }
       ],
       link: function(scope, el, attrs) {

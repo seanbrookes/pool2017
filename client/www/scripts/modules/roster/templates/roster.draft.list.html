@@ -1,7 +1,7 @@
 <table class="PreDraftRosterTable">
   <caption>{{roster.name}}</caption>
 <tbody>
-  <tr ng-class="{ 'draft-protected': $index < 12 }" data-ui-type="row" ng-repeat="player in  roster.players">
+  <tr ng-class="getDraftStatusClass(player, $index)" data-ui-type="row" ng-repeat="player in  roster.players">
     <td>
       <button class="SilentButton" ng-click="deleteRosterPlayer(roster, $index)">{{$index + 1}}</button>
     </td>

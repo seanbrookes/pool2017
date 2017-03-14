@@ -13,7 +13,6 @@ table {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
 }
 .PreDraftRosterTable {
   margin: 0 2rem 0 2rem;
@@ -35,7 +34,13 @@ table {
   background-color: #dfdfdf;
 }
 .PreDraftRosterTable tbody tr.draft-protected td {
-  color: #1C9618;
+  color: #2acb52;
+}
+.PreDraftRosterTable tbody tr.draft-overprotected td {
+  color: #cbb03a;
+}
+.PreDraftRosterTable tbody tr.draft-bubble td {
+  color: #3d4ecb;
 }
 .DefaultChatWindow {
   max-width: 40rem;
@@ -305,15 +310,6 @@ div.pos-RP .nav-rank-list li.pos-RP a {
   stroke: steelblue;
   stroke-width: 1.5px;
 }
-.Layout {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-}
-.Layout--Wrap {
-  flex-wrap: wrap;
-}
 .side-nav-bar {
   background-color: #08592b;
   padding: 0;
@@ -462,6 +458,9 @@ div.pos-RP .nav-rank-list li.pos-RP a {
 .AdminRosterNavList li button {
   background: none;
   border: 0;
+}
+.PlayerChartContainer {
+  position: relative;
 }
 /*
 
