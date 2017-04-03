@@ -1,6 +1,76 @@
 .PageHeaderContainer {
 
 }
+tr.current-pick {
+  background-color: #ecdbbf;
+}
+.fix-top & {
+  top:0;
+
+  position: fixed;
+
+}
+.DraftBoard_CurrentPickTitle {
+  padding:.5rem;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  width: 100%;
+}
+.nav-pills {
+  background: #ffffff;
+
+}
+.blink {
+  animation: blink-animation 6s 2s  infinite;
+  -webkit-animation: blink-animation 6s 2s  infinite;
+}
+@keyframes blink-animation {
+  //to {
+  //  visibility: hidden;
+  //}
+  0% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes blink-animation {
+  //to {
+  //  visibility: hidden;
+  //}
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.fade-inout {
+  -webkit-transition: linear 2s;
+  -moz-transition: linear 2s;
+  -ms-transition: linear 2s;
+  -o-transition: linear 2s;
+  transition: linear 2s;
+}
+.fade-inout.ng-enter {
+  opacity: 0;
+}
+.fade-inout.ng-enter-active {
+  opacity: 1;
+}
+.fade-inout.ng-leave {
+  opacity: 1;
+}
+.fade-inout.ng-leave-active {
+  opacity: 0;
+}
 .RosterDiamondContainer {
   li.draft-protected {
 

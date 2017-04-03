@@ -6,9 +6,10 @@ Draft.controller('DraftMainController',[
   'Draftpick',
   'DraftServices',
   'RosterService',
-  'socket',
   '$log',
-  function($scope, Draftpick, DraftServices, RosterService, socket, $log){
+  '$interval',
+  '$timeout',
+  function($scope, Draftpick, DraftServices, RosterService,  $log, $interval, $timeout){
     console.log('Draft Main Controller');
 
     $scope.ePlayer = {status:'drafted'};
@@ -16,34 +17,79 @@ Draft.controller('DraftMainController',[
     $scope.draftPicks = [];
     $scope.draftCtx = {currentPick:{}};
     $scope.draftCtx.currentPickRoster = 'mashers';
+    $scope.isShowBoard = false;
+    //document.addEventListener("DOMContentLoaded", function(event) {
+    //
+    //});
+
+    window.onbeforeunload = function(e) {
+      localStorage.setItem('scrollpos', window.scrollY);
+    };
+    var stop;
 
     function loadBoard() {
+
+      localStorage.setItem('scrollpos', window.scrollY);
+      // fade
+      $scope.isShowBoard = false;
       $scope.draftPicks = DraftServices.getDraftBoard()
         .then(function(response) {
-          for (var i = 0;i < response.length;i++) {
-            var pick = response[i];
-            if (!pick.name && !pick.pos && !pick.team) {
-              $scope.draftCtx.currentPickRoster = pick.roster;
-              break;
+          // set current pick id
 
-            }
-
-          }
           $scope.draftPicks = response;
+          $scope.refreshCurrentPick();
+          $scope.isShowBoard = true;
 
+          $timeout(function() {
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo(0, scrollpos);
+
+          }, 2000);
+//          $timeout(function() {return $scope.isShowBoard = true}, 4000);
         });
 
     }
-    function resetCurrentPick() {
-      $scope.draftCtx.currentPick = {};
+    $scope.refreshCurrentPick = function() {
+      for (var i = 0;i < $scope.draftPicks.length;i++) {
+        var pick = $scope.draftPicks[i];
+        if (!pick.name && !pick.pos && !pick.team) {
+          $scope.draftCtx.currentPick = pick;
+          $scope.draftCtx.currentPickRoster = pick.roster;
+          break;
+        }
+      }
+    };
+
+    function startReloadTimer() {
+      stop = $interval(loadBoard, 45000);
     }
+    $scope.pauseReload = function() {
+      if (angular.isDefined(stop)) {
+        $interval.cancel(stop);
+        stop = undefined;
+        $timeout(startReloadTimer, 24000);
+      }
+    };
+    $scope.stopReload = function() {
+      if (angular.isDefined(stop)) {
+        $interval.cancel(stop);
+        stop = undefined;
+      }
+    };
+    $scope.$on('$destroy', function() {
+      // Make sure that the interval is destroyed too
+      $scope.stopReload();
+    });
     function init() {
       //resetCurrentPick();
-      //loadBoard();
+      loadBoard();
+      startReloadTimer();
       //socket.on('draftPickUpdate', function() {
       //  loadBoard();
       //});
     }
+
+
 
 
     $scope.clearPick = function(pick) {
@@ -160,6 +206,7 @@ Draft.controller('DraftMainController',[
 
     $scope.getDraftRowClass = function(pick) {
       var returnClass = 'DraftPickRow';
+
       if (pick && pick.round) {
         if (isOdd(pick.round)) {
           returnClass += '--odd';
@@ -171,18 +218,29 @@ Draft.controller('DraftMainController',[
 
       }
 
+      if (pick.id === $scope.draftCtx.currentPick.id) {
+        returnClass += ' current-pick';
+      }
       return returnClass;
     };
 
     //$scope.$watch('isLoadBoard', functiopostToRostern(newVal, oldVal) {
     //  loadBoard();
     //});
-    $scope.updatePickRoster = function(pick) {
+    $scope.updatePickPlayer = function(pick) {
       if (pick && pick.roster) {
+        var _pick = pick;
+        _pick.slug = pick.roster;
         Draftpick.upsert(pick)
         .$promise
         .then(function(response) {
           $log.debug('good pick update');
+          RosterService.saveRosterPlayer(_pick)
+            .then(function(response) {
+              $log.debug('good roster update');
+              $scope.refreshCurrentPick();
+            });
+
         })
         .catch(function(error) {
           $log.warn('bad update pick', error);
@@ -190,6 +248,7 @@ Draft.controller('DraftMainController',[
 
       }
     };
+
 
 //    $scope.deletePick = function(pick){
 //      delete pick._id;
@@ -342,7 +401,7 @@ Draft.controller('GenListController',[
     console.log('Generate Draft List');
     var roundIndex = 1;
     var pickIndex = 1;
-    var rosterArray = ['mashers','bashers','rallycaps','stallions','stallions','rallycaps','bashers','mashers'];
+    var rosterArray = ['mashers','stallions','bashers','rallycaps','rallycaps','bashers','stallions','mashers'];
 
 
 
