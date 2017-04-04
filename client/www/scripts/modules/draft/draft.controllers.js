@@ -83,7 +83,7 @@ Draft.controller('DraftMainController',[
     function init() {
       //resetCurrentPick();
       loadBoard();
-      startReloadTimer();
+     // startReloadTimer();
       //socket.on('draftPickUpdate', function() {
       //  loadBoard();
       //});

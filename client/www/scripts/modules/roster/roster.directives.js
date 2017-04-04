@@ -297,7 +297,9 @@ Roster.directive('bbpRosterDiamond', [
             scope.dhs = [];
             scope.catchers = [];
             newRoster.players.map(function(player, index) {
-              if (player.draftStatus === 'protected' || player.draftStatus === 'prospect') {
+              if (player.draftStatus === 'protected' ||
+                player.draftStatus === 'prospect' ||
+                player.draftStatus === 'roster') {
                 console.log('Roster Diamond', index);
                 player.index = index;
                 switch(player.pos){

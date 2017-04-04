@@ -114,6 +114,7 @@ Admin.controller('RosterAdminController',[
       $scope.currentRoster.$promise.
         then(function (result) {
           $scope.currentRoster = result[0];
+          $scope.currentRosterName = $scope.currentRoster.slug;
           $scope.players = $scope.currentRoster.players;
 
         }
@@ -151,7 +152,11 @@ Admin.controller('RosterAdminController',[
       if (confirm('delete this player?')) {
         for (var i = 0; i < $scope.currentRoster.players.length;i++) {
           var curPlayer = $scope.currentRoster.players[i];
-          if (player.mlbid == curPlayer.mlbid) {
+          //if (player.mlbid == curPlayer.mlbid) {
+          //  $scope.currentRoster.players.splice(i,1);
+          //  break;
+          //}
+          if (player.name == curPlayer.name) {
             $scope.currentRoster.players.splice(i,1);
             break;
           }

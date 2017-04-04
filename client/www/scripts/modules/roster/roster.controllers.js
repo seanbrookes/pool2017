@@ -576,6 +576,9 @@ Roster.controller('RosterDraftViewController', [
           case 'protected':
             protectedList.push(player);
             break;
+          case 'roster':
+            protectedList.push(player);
+            break;
           case 'bubble':
             bubbleList.push(player);
             break;
