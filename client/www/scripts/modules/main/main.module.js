@@ -31,11 +31,11 @@ Main.config([
     $stateProvider
       .state('home', {
         url: '/',
-        //templateUrl: './scripts/modules/main/templates/main.html',
-        //controller: 'MainController'
+        templateUrl: './scripts/modules/main/templates/main.html',
+        controller: 'MainController'
         //url:'/draft',
-        controller:'DraftMainController',
-        templateUrl:'./scripts/modules/draft/templates/draft.main.html'
+        //controller:'DraftMainController',
+        //templateUrl:'./scripts/modules/draft/templates/draft.main.html'
       })
       .state('roster', {
         url:'/roster/:slug',
