@@ -4,7 +4,82 @@ Stats.directive('bbpStatsUpdateView', [
   function($log, $scope) {
     return {
       restrict: 'E',
-      templateUrl: './scripts/module/stats/template/stats.update.html'
+      templateUrl: './scripts/module/stats/templates/stats.update.html'
+    }
+
+  }
+]);
+Stats.directive('bbpStatsUpdateFrames', [
+  '$log',
+  '$timeout',
+  '$interval',
+  'Statupdate',
+  function($log, $timeout, $interval, Statupdate) {
+    return {
+      restrict: 'E',
+      templateUrl: './scripts/modules/stats/templates/stats.update.frames.html',
+      controller: [
+        '$scope',
+        function($scope) {
+          console.log('TESTS');
+          $scope.rostsersCollection = [
+            'http://bbpool2017.herokuapp.com/#/roster/bashers',
+            'http://bbpool2017.herokuapp.com/#/roster/mashers',
+            'http://bbpool2017.herokuapp.com/#/roster/rallycaps',
+            'http://bbpool2017.herokuapp.com/#/roster/stallions'
+          ];
+          $scope.updateMessage = '';
+        }
+      ],
+      link: function(scope, el, attrs) {
+
+        var domHost = document.getElementById('mount-point');
+
+        function updateFrame(link) {
+          console.log('ROSTER: ', link);
+
+          // var domHost = document.getElementById('mount-point');
+
+          var iframe = document.createElement('iframe');
+          iframe.style.visibility = 'hidden';
+          iframe.src = link;
+          domHost.appendChild(iframe);
+        }
+
+        function doTheUpdate() {
+          scope.rostsersCollection.map(function(link) {
+            $timeout(function() {
+              updateFrame(link);
+            }, 2000);
+          });
+
+        }
+
+        function goForIt() {
+          scope.updateMessage = 'updating';
+          Statupdate.updatestats({},
+            function(response){
+              console.log('good stats update: ' + JSON.stringify(response));
+              $timeout(function() {
+                doTheUpdate();
+                $timeout(function() {
+                  doTheUpdate();
+                  scope.updateMessage = 'stats should be updated';
+                },2000);
+              },2000);
+            },
+            function(response){
+              console.log('bad stats update: ' + JSON.stringify(response));
+            }
+          );
+        }
+
+
+
+        goForIt();
+
+
+      }
     }
 
   }

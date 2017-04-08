@@ -1,3 +1,9 @@
+Stats.controller('StatsUpdateFramesController', [
+  '$scope',
+  function($scope) {
+    console.log('fuck you');
+  }
+]);
 Stats.controller('StatsUpdateMainController', [
   '$scope',
   '$log',

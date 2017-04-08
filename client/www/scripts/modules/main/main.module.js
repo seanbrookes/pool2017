@@ -54,8 +54,8 @@ Main.config([
       })
       .state('statsupdate', {
         url:'/statsupdate',
-        controller:'StatsUpdateMainController',
-        templateUrl:'./scripts/modules/stats/templates/stats.update.html'
+        controller: 'StatsUpdateFramesController',
+        templateUrl:'./scripts/modules/stats/templates/stats.update.main.html'
       })
       .state('mlb', {
         url:'/mlb',
