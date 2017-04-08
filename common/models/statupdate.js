@@ -415,41 +415,20 @@ module.exports = function(Statupdate) {
 
           }
 
-          //var statUpdateObj = {
-          //  date:Date.now(),
-          //  status:'good',
-          //  type:'stats'
-          //};
+          var statUpdateObj = {
+            date:Date.now(),
+            timestamp: new Date().getTime(),
+            status:'good',
+            type:'stats'
+          };
 
-
-
-
-
-          cb(null, statUpdateObj);
-
-
-          //
-          //StatUpdate.create({}, statUpdateObj,
-          //  function(response){
-          //    console.log('yay added stat update');
-          //
-          //  },
-          //  function(response){
-          //    console.log('sad no stat update: ' + JSON.stringify(response));
-          //  }
-          //);
-
-
-
-
-
-
-
-
-
-
-
-
+          StatUpdate.create(statUpdateObj, function(err, response){
+            if (err) {
+              console.log('sad no stat update: ' + JSON.stringify(response));
+            }
+            console.log('yay added stat update');
+            cb(null, statUpdateObj);
+          });
 
         }); // end batter stats
 
