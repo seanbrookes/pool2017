@@ -73,15 +73,15 @@ Stats.directive('bbpStatsUpdateFrames', [
                     type:'stats'
                   };
 
-
-                  Statupdate.create(statUpdateObj,
-                    function(response){
+                  Statupdate.create(statUpdateObj)
+                    .$promise
+                    .then(function(response) {
                       console.log('update timestamp');
-                    },
-                    function(response){
+                      return response;
+                    })
+                    .catch(function(error) {
                       console.log('sad timestamp update: ' + JSON.stringify(response));
-                    }
-                  );
+                    });
                   scope.updateMessage = 'stats should be updated';
                 },2000);
               },2000);
