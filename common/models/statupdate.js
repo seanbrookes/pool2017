@@ -415,42 +415,6 @@ module.exports = function(Statupdate) {
 
           }
 
-          var statUpdateObj = {
-            date: new Date(),
-            timestamp:new Date().getTime(),
-            status:'good',
-            type:'stats'
-          };
-
-
-
-
-
-
-
-
-
-          StatUpdate.create(statUpdateObj,
-            function(response){
-              console.log('yay added stat update');
-              cb(null, statUpdateObj);
-            },
-            function(response){
-              console.log('sad no stat update: ' + JSON.stringify(response));
-            }
-          );
-
-
-
-
-
-
-
-
-
-
-
-
 
         }); // end batter stats
 

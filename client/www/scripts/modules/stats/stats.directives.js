@@ -64,6 +64,24 @@ Stats.directive('bbpStatsUpdateFrames', [
                 doTheUpdate();
                 $timeout(function() {
                   doTheUpdate();
+
+                  // update timestamp
+                  var statUpdateObj = {
+                    date: new Date(),
+                    timestamp:new Date().getTime(),
+                    status:'good',
+                    type:'stats'
+                  };
+
+
+                  Statupdate.create(statUpdateObj,
+                    function(response){
+                      console.log('update timestamp');
+                    },
+                    function(response){
+                      console.log('sad timestamp update: ' + JSON.stringify(response));
+                    }
+                  );
                   scope.updateMessage = 'stats should be updated';
                 },2000);
               },2000);
