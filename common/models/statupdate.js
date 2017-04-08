@@ -416,8 +416,7 @@ module.exports = function(Statupdate) {
           }
 
           var statUpdateObj = {
-            date: new Date(),
-            timestamp:new Date().getTime(),
+            date:Date.now(),
             status:'good',
             type:'stats'
           };
@@ -430,7 +429,7 @@ module.exports = function(Statupdate) {
 
 
 
-          StatUpdate.create(statUpdateObj,
+          StatUpdate.create({}, statUpdateObj,
             function(response){
               console.log('yay added stat update');
               cb(null, statUpdateObj);
