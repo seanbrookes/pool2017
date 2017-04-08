@@ -66,22 +66,22 @@ Stats.directive('bbpStatsUpdateFrames', [
                   doTheUpdate();
 
                   // update timestamp
-                  var statUpdateObj = {
-                    date: new Date(),
-                    timestamp:new Date().getTime(),
-                    status:'good',
-                    type:'stats'
-                  };
-
-                  Statupdate.create(statUpdateObj)
-                    .$promise
-                    .then(function(response) {
-                      console.log('update timestamp');
-                      return response;
-                    })
-                    .catch(function(error) {
-                      console.log('sad timestamp update: ' + JSON.stringify(response));
-                    });
+                  //var statUpdateObj = {
+                  //  date: new Date(),
+                  //  timestamp:new Date().getTime(),
+                  //  status:'good',
+                  //  type:'stats'
+                  //};
+                  //
+                  //Statupdate.create(statUpdateObj)
+                  //  .$promise
+                  //  .then(function(response) {
+                  //    console.log('update timestamp');
+                  //    return response;
+                  //  })
+                  //  .catch(function(error) {
+                  //    console.log('sad timestamp update: ' + JSON.stringify(response));
+                  //  });
                   scope.updateMessage = 'stats should be updated';
                 },2000);
               },2000);
