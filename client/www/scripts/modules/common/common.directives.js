@@ -1351,9 +1351,35 @@ Common.directive('bbpAppHeader', [
       controller: [
         '$scope',
         '$stateParams',
-        function($scope, $stateParams) {
+        'Statupdate',
+        function($scope, $stateParams, Statupdate) {
           $scope.headerCtx = {};
           $scope.headerCtx.currentRoster = $stateParams.slug;
+
+          $scope.headerCtx.lastUpdate = Statupdate.find({})
+            .$promise
+            .then(function(response) {
+              //$scope.headerCtx.lastUpdate = response[0].timestamp;
+              var maxVal = $scope.headerCtx.lastUpdate = Math.max.apply(Math, response.map(function(o){return o.timestamp;}));
+
+
+              var theDate = moment.unix(maxVal);
+
+              //moment.unix(maxVal).format("MM/DD/YYYY");
+
+             // $scope.headerCtx.lastUpdate = theDate.tz("America/Vancouver").format('ll HH:mm:ss Z');
+             // $scope.headerCtx.lastUpdate = moment.unix(maxVal).format('ll HH:mm:ss Z');
+              var tryThisDate = new Date(maxVal);
+              // .format("dddd, MMMM Do YYYY, h:mm:ss a")
+              $scope.headerCtx.lastUpdate = moment(tryThisDate).format('dddd, MMMM Do YYYY, h:mm:ss a');
+
+              //console.log('timestamps', response);
+            })
+            .catch(function(error) {
+              console.log('bad get statupdate', error);
+            });
+
+
       }],
       link: function(scope, el, attrs) {
 
