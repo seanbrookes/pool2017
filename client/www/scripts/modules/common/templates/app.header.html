@@ -1,20 +1,22 @@
-<header class="PageHeaderContainer">
-  <nav class="{{headerCtx.currentRoster}} Layout Spread" role="navigation">
+<header class="PageHeaderContainer Layout Spread">
+  <nav class="{{headerCtx.currentRoster}}" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="Layout">
-
-      <a class="branding" ui-sref="home">
-        <img src="./images/logo.png" alt="logo" class="logo">
-      </a>
+      <div class="branding__container">
+        <a class="branding__link" ui-sref="home">
+          <img class="branding__logo" src="./images/logo.png" alt="logo" />
+        </a>
+      </div>
       <!--<a class="navbar-brand" ui-sref="standings">Standings</a>-->
-      <a class="navbar-brand bashers" ui-sref="roster({ slug: 'bashers' })">Bashers</a>
-      <a class="navbar-brand mashers" ui-sref="roster({ slug: 'mashers' })">Mashers</a>
-      <a class="navbar-brand rallycaps" ui-sref="roster({ slug: 'rallycaps' })">Rally Caps</a>
-      <a class="navbar-brand stallions" ui-sref="roster({ slug: 'stallions' })">Stallions</a>
+      <a class="navbar__link bashers" ui-sref="roster({ slug: 'bashers' })">Bashers</a>
+      <a class="navbar__link mashers" ui-sref="roster({ slug: 'mashers' })">Mashers</a>
+      <a class="navbar__link rallycaps" ui-sref="roster({ slug: 'rallycaps' })">Rally Caps</a>
+      <a class="navbar__link stallions" ui-sref="roster({ slug: 'stallions' })">Stallions</a>
       <!--<a class="navbar-brand" ui-sref="charts">Charts</a>-->
-      <a class="navbar-brand" ui-sref="draft">Draft</a>
+      <a class="navbar__link" ui-sref="draft">Draft</a>
 
     </div>
-    <div>Last update: <span>{{ headerCtx.lastUpdate }}</span></div>
+
   </nav>
+  <div>Last update: <span>{{ headerCtx.lastUpdate }}</span></div>
 </header>

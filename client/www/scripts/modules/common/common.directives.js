@@ -2,7 +2,7 @@ Common.directive('bbpCommonTotalsChart', [
   function() {
     return  {
       restrict: 'E',
-      template: '<svg id="visualisation" width="1000" height="500"></svg>',
+      template: '<svg id="visualisation"></svg>',
       controller: [
         '$scope',
         '$log',
@@ -279,7 +279,7 @@ Common.directive('bbpCommonPitchingTotalsChart', [
   function() {
     return  {
       restrict: 'E',
-      template: '<svg id="HittersTotalChart" width="1000" height="500"></svg>',
+      template: '<svg id="HittersTotalChart"></svg>',
       controller: [
         '$scope',
         '$log',
@@ -557,7 +557,7 @@ Common.directive('bbpCommonHittingTotalsChart', [
   function() {
     return  {
       restrict: 'E',
-      template: '<svg id="StartersTotalChart" width="1000" height="500"></svg>',
+      template: '<svg id="StartersTotalChart"></svg>',
       controller: [
         '$scope',
         '$log',
@@ -834,7 +834,7 @@ Common.directive('bbpCommonCloserTotalsChart', [
   function() {
     return  {
       restrict: 'E',
-      template: '<svg id="ClosersTotalChart" width="1000" height="500"></svg>',
+      template: '<svg id="ClosersTotalChart"></svg>',
       controller: [
         '$scope',
         '$log',
@@ -1388,6 +1388,16 @@ Common.directive('bbpAppHeader', [
           scope.headerCtx.currentRoster = newRoster;
         }, true);
       }
+    }
+  }
+]);
+Common.directive('commonSidebarNav', [
+  function() {
+    return {
+      restrict: 'E',
+      templateUrl: './scripts/modules/common/templates/sidebar.nav.html',
+      replace: true,
+      controller:function(){}
     }
   }
 ]);

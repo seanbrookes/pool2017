@@ -1,34 +1,15 @@
 <div class="Layout NoWrap">
-    <div class="side-nav-bar">
-      <grand-totals-summary-list></grand-totals-summary-list>
-      <pos-rank-nav-list></pos-rank-nav-list>
-      <hr />
-      <div class="other-nav-container">
-        <ul>
-          <li>
-            <a href="http://www.cbssports.com/mlb/probable-pitchers" target="_new">probable</a>
-          </li>
-          <li>
-            <a href="http://www.cbssports.com/mlb/scoreboard" target="_new">scores</a>
-          </li>
-          <li>
-            <a href="http://www.rotoworld.com/playernews/mlb/baseball-player-news" target="_new">news</a>
-          </li>
-          <li>
-            <a href="http://mlb.mlb.com/mediacenter/index.jsp?c_id=mlb" target="_new">MLB TV</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+  <common-sidebar-nav></common-sidebar-nav>
 
-
-    <div>
-      <general-totals-summary-list></general-totals-summary-list>
+  <div class="main-content-container">
+    <general-totals-summary-list></general-totals-summary-list>
+    <div class="home__charts__container">
       <bbp-common-totals-chart></bbp-common-totals-chart>
       <bbp-common-hitting-totals-chart></bbp-common-hitting-totals-chart>
       <bbp-common-pitching-totals-chart></bbp-common-pitching-totals-chart>
       <bbp-common-closer-totals-chart></bbp-common-closer-totals-chart>
     </div>
+  </div>
 
 
 </div>

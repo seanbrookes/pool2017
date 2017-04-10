@@ -2,23 +2,12 @@
   <h2>Admin Home</h2>
   <button ng-click="refreshStats()">refresh stats</button>
   <div class="row">
-    <div class="col-xs-2">
 
-      <ul>
-        <li>
-          <a href="">raw batter</a>
-        </li>
-        <li>
-          <a href="">raw pitchers</a>
-        </li>
-      </ul>
-
-    </div>
     <div class="col-xs-10">
 
       <div class="container">
-        <div class="row">
-          <div class="col-xs-3 ">
+        <div class="Layout">
+          <div>
             <div class="player-list-container">
               <button ng-click="loadRoster('bashers')" ng-model="currRoster">bashers</button>
               <button ng-click="loadRoster('mashers')" ng-model="currRoster">mashers</button>
@@ -39,7 +28,7 @@
               </table>
             </div>
           </div>
-          <div class="col-xs-4">
+          <div>
             <div class="player-list-container">
               <button ng-click="pullRawBatters()">pull batters</button>
               <button ng-click="pullRawPitchers()">pull pitcher</button>

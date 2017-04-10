@@ -235,9 +235,9 @@ tr.current-pick {
   margin-bottom: .3rem;
   padding: .2rem 1rem 0 .2rem;
 }
-.logo {
-  height: 5rem;
-  margin-left: 2rem;
+.branding__logo {
+  height: 3.1rem;
+  margin-left: 1rem;
 }
 nav.mashers a.mashers {
   background-color: #ffffff;
@@ -391,8 +391,6 @@ div.pos-RP .nav-rank-list li.pos-RP a {
   background-color: #08592b;
   padding: 0;
   margin: 0;
-  width: 24rem;
-  display: inline-block;
 }
 .side-nav-bar hr {
   margin-bottom: 0;
