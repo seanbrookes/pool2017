@@ -7,16 +7,15 @@
           <img class="branding__logo" src="./images/logo.png" alt="logo" />
         </a>
       </div>
-      <!--<a class="navbar-brand" ui-sref="standings">Standings</a>-->
       <a class="navbar__link bashers" ui-sref="roster({ slug: 'bashers' })">Bashers</a>
       <a class="navbar__link mashers" ui-sref="roster({ slug: 'mashers' })">Mashers</a>
       <a class="navbar__link rallycaps" ui-sref="roster({ slug: 'rallycaps' })">Rally Caps</a>
       <a class="navbar__link stallions" ui-sref="roster({ slug: 'stallions' })">Stallions</a>
-      <!--<a class="navbar-brand" ui-sref="charts">Charts</a>-->
+      <a class="navbar__link" ui-sref="rosters">Rosters</a>
+      <a class="navbar__link" ui-sref="charts">Charts</a>
+      <a class="navbar__link" ui-sref="diamond">Diamond</a>
       <a class="navbar__link" ui-sref="draft">Draft</a>
-
     </div>
-
   </nav>
   <div>Last update: <span>{{ headerCtx.lastUpdate }}</span></div>
 </header>

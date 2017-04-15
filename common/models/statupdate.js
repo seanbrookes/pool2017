@@ -1,6 +1,9 @@
 var loopback = require('loopback');
 var moment = require('moment');
 var request = require('request');
+var fs = require('fs');
+var path = require('path');
+
 var app = module.exports = loopback();
 
 //var battersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2014&sort_order='desc'&sort_column='avg'&stat_type=hitting&page_type=SortablePlayer&game_type='R'&player_pool=ALL&season_type=ANY&league_code='AL'&sport_code='mlb'&results=1000&recSP=1&recPP=900";
@@ -25,9 +28,11 @@ module.exports = function(Statupdate) {
     var DailyBatterStat = loopback.getModel('dailybatterstat');
     var DailyPitcherStat = loopback.getModel('dailypitcherstat');
     var StatUpdate = loopback.getModel('statupdate');
+    var HotHitter = loopback.getModel('hotHitter');
 
 
     var latestPitchingStats = [];
+    var hotHitters = [];
     var latestHittingStats = [];
     var NLlatestHittingStats = [];
     var pitchingStatCount = 0;
@@ -184,6 +189,20 @@ module.exports = function(Statupdate) {
                           hr: currRawHitter.hr,
                           sb: currRawHitter.sb
                         };
+
+                        //if ((hitterStatPackageObj.r > 1) ||
+                        //    (hitterStatPackageObj.h > 2) ||
+                        //    (hitterStatPackageObj.rbi > 1) ||
+                        //  hitterStatPackageObj.hr > 0) {
+                        //  HotHitter.create(hitterStatPackageObj, function(err,response){
+                        //    if (err) {
+                        //      console.log('bad add hot hitter', err);
+                        //    }
+                        //    console.log('Hot Hitter', response);
+                        //
+                        //  });
+                        //}
+
 
 
                         hitterStatPackageObj.total = getHitterTotal(hitterStatPackageObj);
@@ -639,6 +658,27 @@ module.exports = function(Statupdate) {
     //  });
 
   };
+  Statupdate.writedailystats = function(cb) {
+
+    // find all dailybatterstat
+    var DailyBatterStats = loopback.getModel('dailybatterstat');
+    DailyBatterStats.find({}, function(err, response) {
+      if (err) {
+        return cb(err);
+      }
+      var data = JSON.toString(response);
+      // heroku won't persist a written file
+      //fs.writeFile('/client/www/dailybatterstats.json', data, function(err, data){
+      //  if (err) {
+      //    return cb(err);
+      //  }
+      //  return cb(null, 'Successfully Written to File.');
+      //});
+      return cb(null, 'ok');
+    });
+
+  };
+
   Statupdate.remoteMethod(
     'updatestats',
     {
@@ -646,4 +686,12 @@ module.exports = function(Statupdate) {
       returns: {arg: 'data', type: 'string'}
     }
   );
+  Statupdate.remoteMethod(
+    'writedailystats',
+    {
+      http: {path: '/writedailystats', verb: 'get'},
+      returns: {arg: 'data', type: 'string'}
+    }
+  );
+
 };

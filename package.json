@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-react": "^3.1.0",
     "jshint": "^2.5.6"
   },
   "repository": {

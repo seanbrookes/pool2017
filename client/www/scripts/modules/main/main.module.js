@@ -67,6 +67,19 @@ Main.config([
         controller:'ChartsMainController',
         templateUrl:'./scripts/modules/charts/templates/charts.main.html'
       })
+      .state('diamond', {
+        url:'/diamond',
+        templateUrl:'./scripts/modules/roster/templates/roster.diamond.main.html'
+      })
+      .state('rosters', {
+        url:'/rosters',
+        templateUrl:'./scripts/modules/roster/templates/roster.main.list.view.html'
+      })
+      .state('draft', {
+        url:'/draft',
+        controller:'DraftMainController',
+        templateUrl:'./scripts/modules/draft/templates/draft.main.html'
+      })
       .state('adminroster', {
         url:'/adminroster',
         controller:'RosterAdminController',
@@ -92,11 +105,7 @@ Main.config([
         controller:'RankPosController',
         templateUrl:'./scripts/modules/stats/templates/rank.pos.html'
       })
-      .state('draft', {
-        url:'/draft',
-        controller:'DraftMainController',
-        templateUrl:'./scripts/modules/draft/templates/draft.main.html'
-      })
+
       .state('chat', {
         url:'/chat',
         controller:'ChatMainController',

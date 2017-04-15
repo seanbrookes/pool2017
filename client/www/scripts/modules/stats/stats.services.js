@@ -152,11 +152,13 @@ Stats.service('StatsServices', [
           //}
           if (results.length > 0) {
             // get the current highest grandTotal
-            if (latestTotals.grandTotal > results[0].grandTotal) {
-              $log.debug('creating new total record');
-              var insertObj = latestTotals;
+            if (results[0].roster) {
+              if (latestTotals.grandTotal > results[0].grandTotal) {
+                $log.debug('creating new total record');
+                var insertObj = latestTotals;
 
-              Totals.create(latestTotals);
+                Totals.create(latestTotals);
+              }
             }
           }
           else {

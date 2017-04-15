@@ -30,8 +30,8 @@ boot(app, __dirname, function(err) {
 
   // start the server if `$ node server.js`
   if (require.main === module)
-  //app.start();
-    app.io = require('socket.io')(app.start());
+  app.start();
+   // app.io = require('socket.io')(app.start());
 //var io = require('socket.io').listen(app);
 //io.connect();
   var chatTranscript = [];
@@ -40,23 +40,23 @@ boot(app, __dirname, function(err) {
   models.map(function(model) {
     console.log('Model', model.modelName);
   });
-  app.io.on('connection', function(socket) {
-    console.log('a user connected');
-    socket.on('nickName', function(data) {
-      console.log('Nick Name', data);
-    });
-    socket.on('chatMessage', function(data) {
-      console.log('chat message', data);
-      chatTranscript.push(data);
-      app.io.emit('chat message', data);
-    });
-    socket.on('draftPickUpdate', function(data) {
-      socket.broadcast.emit('draftPickUpdate');
-    });
+  //app.io.on('connection', function(socket) {
+  //  console.log('a user connected');
+  //  socket.on('nickName', function(data) {
+  //    console.log('Nick Name', data);
+  //  });
+  //  socket.on('chatMessage', function(data) {
+  //    console.log('chat message', data);
+  //    chatTranscript.push(data);
+  //    app.io.emit('chat message', data);
+  //  });
+  //  socket.on('draftPickUpdate', function(data) {
+  //    socket.broadcast.emit('draftPickUpdate');
+  //  });
+  //
+  //});
 
-  });
-
-  app.io.on('disconnect', function() {
-    console.log('user disconnected');
-  });
+  //app.io.on('disconnect', function() {
+  //  console.log('user disconnected');
+  //});
 });
