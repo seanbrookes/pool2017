@@ -118,7 +118,7 @@ window.HitterBigData = (HitterBigData = React).createClass({
           break;
         }
         case 'rbi': {
-          if (parseInt(value) > 2) {
+          if (parseInt(value) > 1) {
             return true;
           }
           break;
@@ -143,7 +143,7 @@ window.HitterBigData = (HitterBigData = React).createClass({
         if (isEnough) {
 
           return (
-            <tr>
+            <tr key={item.hitter.name}>
               <td>{item.hitter.roster}</td>
               <td className="hotstatname-col">{item.hitter.name}</td>
               <td>{item.hitter.pos}</td>
@@ -162,6 +162,26 @@ window.HitterBigData = (HitterBigData = React).createClass({
 
 
     };
+
+    function getTableCaption(stat) {
+      switch(stat) {
+        case 'r':
+          return 'runs';
+          break;
+        case 'h':
+          return 'hits';
+          break;
+        case 'hr':
+          return 'home runs';
+          break;
+        case 'rbi':
+          return 'rbi';
+          break;
+
+        default:
+
+      }
+    }
 
     function getHotList(data, stat) {
 
@@ -208,7 +228,7 @@ window.HitterBigData = (HitterBigData = React).createClass({
       return (
         <div className="hotlist hotlist--container">
           <table className="hotlist--table">
-            <caption>{stat}</caption>
+            <caption>{getTableCaption(stat)}</caption>
             {getHotBody(collection, stat)}
           </table>
         </div>
@@ -224,7 +244,7 @@ window.HitterBigData = (HitterBigData = React).createClass({
 
     return (
       <div>
-        <h2>Who's hot (last 4 days)</h2>
+        <h2 className="whos-hot">Who's hot (last 4 days)</h2>
         <div className="Layout">
           {hotRunsList}
           {hotHitterList}

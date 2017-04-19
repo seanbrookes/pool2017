@@ -118,7 +118,7 @@ window.HitterBigData = (HitterBigData = React).createClass({
           break;
         }
         case 'rbi': {
-          if (parseInt(value) > 2) {
+          if (parseInt(value) > 1) {
             return true;
           }
           break;
@@ -143,7 +143,7 @@ window.HitterBigData = (HitterBigData = React).createClass({
         if (isEnough) {
 
           return (
-            React.createElement("tr", null, 
+            React.createElement("tr", {key: item.hitter.name}, 
               React.createElement("td", null, item.hitter.roster), 
               React.createElement("td", {className: "hotstatname-col"}, item.hitter.name), 
               React.createElement("td", null, item.hitter.pos), 
@@ -162,6 +162,26 @@ window.HitterBigData = (HitterBigData = React).createClass({
 
 
     };
+
+    function getTableCaption(stat) {
+      switch(stat) {
+        case 'r':
+          return 'runs';
+          break;
+        case 'h':
+          return 'hits';
+          break;
+        case 'hr':
+          return 'home runs';
+          break;
+        case 'rbi':
+          return 'rbi';
+          break;
+
+        default:
+
+      }
+    }
 
     function getHotList(data, stat) {
 
@@ -208,7 +228,7 @@ window.HitterBigData = (HitterBigData = React).createClass({
       return (
         React.createElement("div", {className: "hotlist hotlist--container"}, 
           React.createElement("table", {className: "hotlist--table"}, 
-            React.createElement("caption", null, stat), 
+            React.createElement("caption", null, getTableCaption(stat)), 
             getHotBody(collection, stat)
           )
         )
@@ -224,7 +244,7 @@ window.HitterBigData = (HitterBigData = React).createClass({
 
     return (
       React.createElement("div", null, 
-        React.createElement("h2", null, "Who's hot (last 4 days)"), 
+        React.createElement("h2", {className: "whos-hot"}, "Who's hot (last 4 days)"), 
         React.createElement("div", {className: "Layout"}, 
           hotRunsList, 
           hotHitterList, 

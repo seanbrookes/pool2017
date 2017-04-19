@@ -1,8 +1,8 @@
 <div class="Layout GeneralTotalsContainer">
   <div class="GeneralTotalItemContainer">
     <!-- grandTotal -->
-    <h3>totals</h3>
     <table class="general-total-table">
+      <caption>Totals</caption>
       <tr ng-repeat="roster in rosters | orderBy:['-grandTotal'] | unique:'roster'">
         <td class="roster-link-cell">
           <a href="#roster/{{ roster.roster }}">{{ roster.roster }}</a>
@@ -15,8 +15,8 @@
   </div>
   <div class="GeneralTotalItemContainer">
     <!-- batterTotal -->
-    <h3>batters</h3>
     <table class="general-total-table">
+      <caption>Batters</caption>
       <tr ng-repeat="roster in rosters | orderBy:['-batterTotal'] | unique:'roster'">
         <td class="roster-link-cell">
           <a href="#roster/{{ roster.roster }}">{{ roster.roster }}</a>
@@ -29,8 +29,8 @@
   </div>
   <div class="GeneralTotalItemContainer">
     <!-- starterTotal -->
-    <h3>starters</h3>
     <table class="general-total-table">
+      <caption>Starters</caption>
       <tr ng-repeat="roster in rosters | orderBy:['-starterTotal'] | unique:'roster'">
         <td class="roster-link-cell">
           <a href="#roster/{{ roster.roster }}">{{ roster.roster }}</a>
@@ -44,8 +44,8 @@
   </div>
   <div class="GeneralTotalItemContainer">
     <!-- closerTotal -->
-    <h3>closers</h3>
     <table class="general-total-table">
+      <caption>Closers</caption>
       <tr ng-repeat="roster in rosters | orderBy:['-closerTotal'] | unique:'roster'">
         <td class="roster-link-cell">
           <a href="#roster/{{ roster.roster }}">{{ roster.roster }}</a>

@@ -8,12 +8,18 @@ window.TotalsList = React.createClass({displayName: "TotalsList",
       grandTotals = this.props.store.grandTotals;
     }
 
-
+    var urlPath = window.location.href;
 
     var rows = grandTotals.map(function(item) {
       var urlString = '#roster/' + item.roster;
+
+      var activeClass = '';
+      if (urlPath.indexOf(item.roster) > -1) {
+        activeClass = 'active-nav';
+      }
+      activeClass = activeClass + ' ' + item.roster;
       return (
-        React.createElement("tr", {className: "{item.roster}"}, 
+        React.createElement("tr", {className: activeClass, key: item.roster}, 
           React.createElement("td", null, 
             React.createElement("a", {href: urlString},  item.roster)
           ), 
@@ -29,7 +35,9 @@ window.TotalsList = React.createClass({displayName: "TotalsList",
     return (
       React.createElement("div", {className: "side-nav-container"}, 
         React.createElement("table", {className: "nav-totals"}, 
+          React.createElement("tbody", null, 
           rows
+          )
         )
       )
     );
@@ -67,11 +75,18 @@ window.SidebarNav = React.createClass({displayName: "SidebarNav",
 window.PosNavList = React.createClass(
   {displayName: "PosNavList",
     render: function() {
+
+      var urlPath = window.location.href;
+      var activeClass = 'pos-all';
+      if (urlPath.indexOf('/all') > -1) {
+        activeClass = activeClass + ' active-nav';
+      }
+
       return (
         React.createElement("div", {className: "side-nav-container"}, 
           React.createElement("div", {className: "nav-rank-title"}, "Batters"), 
           React.createElement("ul", {className: "nav-batter-rank-list nav-rank-list"}, 
-            React.createElement("li", {className: "pos-all"}, 
+            React.createElement("li", {className: activeClass}, 
               React.createElement("a", {href: "#/rank/all"}, "All")
             ), 
             React.createElement("li", {className: "pos-C"}, 

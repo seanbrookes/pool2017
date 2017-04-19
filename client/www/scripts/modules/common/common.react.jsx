@@ -8,12 +8,18 @@ window.TotalsList = React.createClass({
       grandTotals = this.props.store.grandTotals;
     }
 
-
+    var urlPath = window.location.href;
 
     var rows = grandTotals.map(function(item) {
       var urlString = '#roster/' + item.roster;
+
+      var activeClass = '';
+      if (urlPath.indexOf(item.roster) > -1) {
+        activeClass = 'active-nav';
+      }
+      activeClass = activeClass + ' ' + item.roster;
       return (
-        <tr className="{item.roster}" >
+        <tr className={activeClass} key={item.roster}>
           <td>
             <a href={urlString}>{ item.roster }</a>
           </td>
@@ -29,7 +35,9 @@ window.TotalsList = React.createClass({
     return (
       <div className="side-nav-container">
         <table className="nav-totals">
+          <tbody>
           {rows}
+          </tbody>
         </table>
       </div>
     );
@@ -67,11 +75,18 @@ window.SidebarNav = React.createClass({
 window.PosNavList = React.createClass(
   {
     render: function() {
+
+      var urlPath = window.location.href;
+      var activeClass = 'pos-all';
+      if (urlPath.indexOf('/all') > -1) {
+        activeClass = activeClass + ' active-nav';
+      }
+
       return (
         <div className="side-nav-container">
           <div className="nav-rank-title">Batters</div>
           <ul className="nav-batter-rank-list nav-rank-list">
-            <li className="pos-all">
+            <li className={activeClass}>
               <a href="#/rank/all">All</a>
             </li>
             <li className="pos-C">
