@@ -69,26 +69,7 @@ tr.current-pick {
 .fade-inout.ng-leave-active {
   opacity: 0;
 }
-.RosterDiamondContainer {
-  li.draft-protected {
 
-      color: #2acb52;
-
-  }
-  li.draft-overprotected {
-
-      color: #cbb03a;
-
-
-  }
-  li.draft-bubble {
-
-
-      color: #3d4ecb;
-
-
-  }
-}
 .PreDraftRosterTable {
   margin:0 2rem 0 2rem;
   font-size:80%;
@@ -177,11 +158,15 @@ tr.current-pick {
 }
 
 
+
+
 .RosterDiamondContainer {
   position:relative;
   border:1px solid black;
-  width:64rem;
+  width:56rem;
   height:48rem;
+  background: url('/images/diamond.svg') no-repeat center center;
+  background-size: cover;
 
   .PositionContainer {
 
@@ -192,6 +177,24 @@ tr.current-pick {
 
       li {
         text-decoration: underline;
+      }
+      li.draft-protected {
+
+        color: #2acb52;
+
+      }
+      li.draft-overprotected {
+
+        color: #cbb03a;
+
+
+      }
+      li.draft-bubble {
+
+
+        color: #3d4ecb;
+
+
       }
     }
   }

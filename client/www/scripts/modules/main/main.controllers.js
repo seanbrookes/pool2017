@@ -1,7 +1,8 @@
 Main.controller('MainController', [
   '$scope',
   '$log',
-  function($scope, $log){
+  '$location',
+  function($scope, $log, $location){
     $log.debug('Main Controller');
     $scope.currentRoster = {};
     $scope.currentFilter = '';
@@ -13,10 +14,17 @@ Main.controller('MainController', [
         $scope.bbpCtx = {
           homeRoster: '',
           currentRoster: '',
-          currentPosFilter: ''
+          currentPosFilter: '',
+          amIActive: function(key) {
+            // get the current URL
+            var currPath = $location.path();
+            if (currPath.indexOf(key) > -1) {
+              return 'active-nav';
+            }
+            return '';
+            // check if it matches the key
+          }
         };
-
-
     }
 
     $scope.isDog = function(){

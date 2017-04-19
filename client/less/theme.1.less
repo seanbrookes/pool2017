@@ -6,11 +6,31 @@
   margin-bottom: .3rem;
   padding: .2rem 1rem 0 .2rem;
 }
-.logo {
-  height: 5rem;
-  margin-left:2rem;
+.branding__logo {
+  height: 3.1rem;
+  margin-left:1rem;
 }
 nav {
+  .mainnav-list {
+    list-style: none;
+
+    li {
+      padding: .3rem;
+      border:1px solid #fefefe;
+      display: inline-block;
+      border-bottom:1px solid transparent;
+
+      &.active-nav {
+        border-bottom-color: #0000cc;
+      }
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+  }
+
   &.mashers {
 
     a.mashers {
@@ -50,6 +70,49 @@ nav {
 
   &:hover {
     text-decoration: none;
+  }
+}
+.last-update {
+  padding:1rem;
+}
+h2.whos-hot {
+  padding: 0;
+  margin:0 0 0 .6rem;
+  font-size:100%;
+  color:#777777;
+  font-weight: 400;
+}
+.hotlist--container {
+  margin: 0 .3rem 0 .3rem;
+  padding: 0 .3rem 0 .3rem;
+}
+
+.hotlist--table {
+  border: 1px solid #eeeeee;
+  font-size:13px;
+  color:#666666;
+
+  caption {
+    background-color: darkblue;
+    color: #ffffff;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+
+
+  tr:nth-child(odd) {
+    background-color: #e1e1e1;
+  }
+
+
+  .hotstatname-col {
+    font-size:14px;
+    color: #000060;
+  }
+  .hotstat-col {
+    font-size:15px;
+    font-weight:400;
+    color: #000060;
   }
 }
 
@@ -289,8 +352,7 @@ div {
   background-color:#08592b;
   padding:0;
   margin:0;
-  width:24rem;
-  display:inline-block;
+
 
   hr {
     margin-bottom:0;
@@ -331,6 +393,16 @@ div {
           color:#000000;
         }
       }
+
+      li.active-nav {
+        background: #ffffff;
+
+        a {
+          color: #444444;
+        }
+      }
+
+
     }
     .total-delta {
       font-size:80%;
@@ -395,7 +467,7 @@ div {
 
 }
 .draft-table {
-  min-width:45rem;
+  width:28rem;
   margin: 0 auto 0 auto;
 }
 .branding {
@@ -579,12 +651,7 @@ Original
 #FormAdminRosterPlayer{
   display:block;
 }
-.roster-table{
-  width:56rem;
-}
-.roster-table button{
-  /*display:none;*/
-}
+
 .ButtonContainer {
   display: flex;
   flex-direction: row;
@@ -609,34 +676,107 @@ tr.is-associated{
 footer {
   height:100px;
 }
-.roster-table{
+
+
+
+
+.roster-table {
+  width:56rem;
   font-size:120%;
 
-}
-.roster-table caption{
-  text-align:left;
-  letter-spacing: 1rem;
-  font-size:118%;
-  text-decoration: underline;
-  color:#999999;
+  caption{
+    text-align:left;
+    letter-spacing: 1rem;
+    font-size:118%;
+    text-decoration: underline;
+    color:#999999;
+  }
 
+  td{
+    padding:.1rem;
+    border:1px solid #dddddd;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  td.row-total {
+    font-weight: bold;
+    background-color: #eeeeee;
+    text-align: left;
+    padding-left: 1rem;
+  }
+
+  td.player-name {
+    color: darkblue;
+    text-align: left;
+  }
+  .counting {
+    background-color: #eeeeee;
+    font-weight: bold;
+    color:#2b0859;
+  }
 }
-.roster-table td{
-  padding:.1rem;
-  border:1px solid #dddddd;
-  text-align: center;
-  vertical-align: middle;
+.roster-starters-table {
+  tr:nth-child(-n+4) {
+    background-color: #efefef;
+  }
 }
-.roster-table td.row-total {
-  font-weight: bold;
-  background-color: #eeeeee;
-  text-align: left;
-  padding-left: 1rem;
+.roster-closers-table {
+  tr:nth-child(-n+2) {
+    background-color: #efefef;
+  }
 }
-.roster-table td.player-name {
-  color: darkblue;
-  text-align: left;
+
+
+.rank-table{
+  width:56rem;
+  font-size:120%;
+
+  tr:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+
+  caption{
+    text-align:left;
+    letter-spacing: 1rem;
+    font-size:118%;
+    text-decoration: underline;
+    color:#999999;
+  }
+
+  td{
+    padding:.1rem;
+    border:1px solid #dddddd;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  td.row-total {
+    font-weight: bold;
+    background-color: #eeeeee;
+    text-align: left;
+    padding-left: 1rem;
+  }
+
+  td.player-name {
+    color: darkblue;
+    text-align: left;
+  }
+  .counting {
+    background-color: #eeeeee;
+    font-weight: bold;
+    color:#2b0859;
+  }
 }
+
+
+
+
+
+
+
+
+
 h1 span.grand-total{
   font-weight: 300;
 }
@@ -659,13 +799,7 @@ button:disabled{
     list-style: none;
   }
 }
-.roster-table {
-  .counting {
-    background-color: #eeeeee;
-    font-weight: bold;
-    color:#2b0859;
-  }
-}
+
 .general-nav-container ul{
   max-width:240px;
   margin:0 auto 0 auto;
@@ -677,6 +811,15 @@ button:disabled{
 }
 .general-nav-container ul li a{
   color:#507921;
+}
+.general-total-table {
+
+  caption {
+    background-color: darkblue;
+    color: #ffffff;
+  }
+
+
 }
 .general-total-table td{
   padding:.5rem;

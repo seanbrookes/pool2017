@@ -2,7 +2,7 @@ Common.directive('bbpCommonTotalsChart', [
   function() {
     return  {
       restrict: 'E',
-      template: '<svg id="visualisation" width="1000" height="500"></svg>',
+      template: '<svg id="visualisation" height="500" width="1000"></svg>',
       controller: [
         '$scope',
         '$log',
@@ -279,7 +279,7 @@ Common.directive('bbpCommonPitchingTotalsChart', [
   function() {
     return  {
       restrict: 'E',
-      template: '<svg id="HittersTotalChart" width="1000" height="500"></svg>',
+      template: '<svg id="HittersTotalChart" height="500" width="1000"></svg>',
       controller: [
         '$scope',
         '$log',
@@ -557,7 +557,7 @@ Common.directive('bbpCommonHittingTotalsChart', [
   function() {
     return  {
       restrict: 'E',
-      template: '<svg id="StartersTotalChart" width="1000" height="500"></svg>',
+      template: '<svg id="StartersTotalChart" height="500" width="1000"></svg>',
       controller: [
         '$scope',
         '$log',
@@ -834,7 +834,7 @@ Common.directive('bbpCommonCloserTotalsChart', [
   function() {
     return  {
       restrict: 'E',
-      template: '<svg id="ClosersTotalChart" width="1000" height="500"></svg>',
+      template: '<svg id="ClosersTotalChart" height="500" width="1000"></svg>',
       controller: [
         '$scope',
         '$log',
@@ -1113,11 +1113,11 @@ Common.directive('grandTotalsSummaryList', [
   function(Totals){
     return{
       restrict: 'E',
-      templateUrl: './scripts/modules/common/templates/totals.list.html',
       replace: true,
       controller:[
         '$scope',
-        function($scope){
+        '$filter',
+        function($scope, $filter){
           var filter = {
             'filter[order]':'date DESC'
           };
@@ -1126,7 +1126,11 @@ Common.directive('grandTotalsSummaryList', [
           initTotals
             .$promise
             .then(function (result) {
-              var beginArray = result;
+              var beginArray = result.filter(function(item) {
+                if (item.roster) {
+                  return item;
+                }
+              });
               var returnArray = [];
 
               var totalsComparitorObj = {
@@ -1301,6 +1305,7 @@ Common.directive('grandTotalsSummaryList', [
                     }
                     break;
                   default:
+                    break;
 
 
 
@@ -1322,22 +1327,30 @@ Common.directive('grandTotalsSummaryList', [
               }
 
 
-
-
-              //console.log('COMPARITOR: ' + JSON.stringify(totalsComparitorObj));
-
-              $scope.grandTotals = returnArray;
+              //orderBy:['-grandTotal'] | unique:'roster'
+              //$filter('orderBy')(returnArray, '-grandTotal', {unique: 'roster'});
+              returnArray = $filter('orderBy')(returnArray, 'grandTotal', {unique: 'roster'});
+              $scope.grandTotals = $filter('unique')(returnArray, 'roster');
 
             }
           );
           var getGrandTotalDelta = function(roster, compObj){
-//            return 0;
-            if (compObj[roster].previous.grandTotal !== 0){
-              return (compObj[roster].latest.grandTotal - compObj[roster].previous.grandTotal);
+            if (roster) {
+              if (compObj[roster].previous.grandTotal !== 0){
+                return (compObj[roster].latest.grandTotal - compObj[roster].previous.grandTotal);
+              }
+
             }
           }
         }
-      ]
+      ],
+      link: function(scope, el, attrs) {
+        scope.$watch('grandTotals', function(newVal, oldVal) {
+          if (scope.grandTotals) {
+            ReactDOM.render(React.createElement(TotalsList, {store:scope}), el[0]);
+          }
+        }, true);
+      }
     }
   }
 ]);
@@ -1391,13 +1404,25 @@ Common.directive('bbpAppHeader', [
     }
   }
 ]);
+Common.directive('commonSidebarNav', [
+  function() {
+    return {
+      restrict: 'E',
+      templateUrl: './scripts/modules/common/templates/sidebar.nav.html',
+      replace: true,
+      controller: [function(){}]
+    }
+  }
+]);
 Common.directive('posRankNavList', [
   function() {
     return {
       restrict: 'E',
-      templateUrl: './scripts/modules/common/templates/pos.rank.nav.list.html',
       replace: true,
-      controller:function(){}
+      controller: [function(){}],
+      link: function(scope, el, attrs) {
+        ReactDOM.render(React.createElement(PosNavList, {store:scope}), el[0]);
+      }
     }
   }
 ]);

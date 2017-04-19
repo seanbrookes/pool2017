@@ -103,5 +103,11 @@
     "public": true,
     "$promise": {},
     "$resolved": true
+  },
+  "hotHitter": {
+    "dataSource": "bbpool2017",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   }
 }

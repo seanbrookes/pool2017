@@ -85,6 +85,116 @@ Stats.directive('bbpStatsUpdateFrames', [
 
   }
 ]);
+Stats.directive('bbpStatsBigData', [
+  function() {
+    return {
+      restrict: 'E',
+      controller: [
+        'Dailybatterstat',
+        '$scope',
+        function(Dailybatterstat, $scope) {
+          $scope.batterData = [];
+
+          var masterHitterCollection = [];
+          var statsCollection = [];
+          var scoreStats = {
+            hitter: {},
+            r: [],
+            h: [],
+            hr: [],
+            rbi: []
+          };
+
+
+          var ONE_WEEK = 4 * 24 * 60 * 60 * 1000;  // Month in milliseconds
+          var filter = {
+            where: {
+              lastUpdate: {gt: Date.now() - ONE_WEEK}
+            }
+          };
+          var batterBlob = {};
+          var hotStatData = {};
+
+          function addHitterToHisCollection(hitter) {
+            var isUnique = true;
+            masterHitterCollection.map(function(hitterCollection) {
+              if (hitter.mlbid === hitterCollection[0].mlbid) {
+                hitterCollection.push(hitter);
+                isUnique = false;
+              }
+            });
+            if (isUnique) {
+              var newArray = [hitter];
+              masterHitterCollection.push(newArray);
+            }
+          }
+
+          Dailybatterstat.find({filter: filter})
+            .$promise
+            .then(function(response) {
+              var weeklyBatterStats = response;
+
+              weeklyBatterStats.map(function(hitter) {
+                if (!batterBlob[hitter.mlbid]) {
+                  batterBlob[hitter.mlbid] = [];
+                }
+                batterBlob[hitter.mlbid].push(hitter);
+                addHitterToHisCollection(hitter);
+              });
+
+              masterHitterCollection.map(function(hitterCollection) {
+                var runs = hitterCollection[hitterCollection.length - 1].r - hitterCollection[0].r;
+                var hits = hitterCollection[hitterCollection.length - 1].h - hitterCollection[0].h;
+                var hr = hitterCollection[hitterCollection.length - 1].hr - hitterCollection[0].hr;
+                var rbi = hitterCollection[hitterCollection.length - 1].rbi - hitterCollection[0].rbi;
+                var scoreStats = {
+                  hitter: hitterCollection[0],
+                  r: runs,
+                  h: hits,
+                  hr: hr,
+                  rbi: rbi
+                };
+                statsCollection.push(scoreStats);
+              });
+
+
+
+              // sort the stats collection into ranked list (r, h, hr, rbi)
+              hotStatData.rankedRuns = statsCollection.sort(function(a,b){ //Array now becomes [41, 25, 8, 7]
+                return b.r - a.r
+              });
+              hotStatData.rankedHits = statsCollection.sort(function(a,b){ //Array now becomes [41, 25, 8, 7]
+                return b.h - a.h
+              });
+              hotStatData.rankedHomeRuns = statsCollection.sort(function(a,b){ //Array now becomes [41, 25, 8, 7]
+                return b.hr - a.hr
+              });
+              hotStatData.rankedRBI = statsCollection.sort(function(a,b){ //Array now becomes [41, 25, 8, 7]
+                return b.rbi - a.rbi
+              });
+
+              $scope.batterData = hotStatData;
+
+            })
+            .catch(function(error) {
+              console.log('get daily batter stats error: ', error);
+            });
+
+        }
+      ],
+      link: function(scope, el, attrs) {
+        scope.$watch('batterData', function(newVal, oldVal) {
+
+         // if (newVal && newVal.length > 0) {
+            ReactDOM.render(React.createElement(HitterBigData, {store:scope}), el[0]);
+        //  }
+
+      //    React.render(React.createElement(HitterBigData, {scope:scope}), el[0]);
+        });
+      }
+    }
+  }
+]);
 Stats.directive('bbpStatsHitterHistory', [
   '$timeout',
   '$log',

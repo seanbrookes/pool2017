@@ -134,7 +134,7 @@ window.HitterBigData = (HitterBigData = React).createClass({
 
     var getHotBody = function(collection, stat) {
       if (!collection || collection.length < 1) {
-        return (React.createElement("tbody", null));
+        return (<tbody />);
       }
 
       var rankedCollection = rankedStats(collection, stat);
@@ -143,21 +143,21 @@ window.HitterBigData = (HitterBigData = React).createClass({
         if (isEnough) {
 
           return (
-            React.createElement("tr", {key: item.hitter.name}, 
-              React.createElement("td", null, item.hitter.roster), 
-              React.createElement("td", {className: "hotstatname-col"}, item.hitter.name), 
-              React.createElement("td", null, item.hitter.pos), 
-              React.createElement("td", null, item.hitter.team), 
-              React.createElement("td", {className: "hotstat-col"}, item[stat])
-            )
+            <tr key={item.hitter.name}>
+              <td>{item.hitter.roster}</td>
+              <td className="hotstatname-col">{item.hitter.name}</td>
+              <td>{item.hitter.pos}</td>
+              <td>{item.hitter.team}</td>
+              <td className="hotstat-col">{item[stat]}</td>
+            </tr>
           )
 
         }
       });
       return (
-        React.createElement("tbody", null, 
-        rows
-        )
+        <tbody>
+        {rows}
+        </tbody>
       );
 
 
@@ -226,12 +226,12 @@ window.HitterBigData = (HitterBigData = React).createClass({
 
 
       return (
-        React.createElement("div", {className: "hotlist hotlist--container"}, 
-          React.createElement("table", {className: "hotlist--table"}, 
-            React.createElement("caption", null, getTableCaption(stat)), 
-            getHotBody(collection, stat)
-          )
-        )
+        <div className="hotlist hotlist--container">
+          <table className="hotlist--table">
+            <caption>{getTableCaption(stat)}</caption>
+            {getHotBody(collection, stat)}
+          </table>
+        </div>
 
       );
     }
@@ -243,17 +243,17 @@ window.HitterBigData = (HitterBigData = React).createClass({
 
 
     return (
-      React.createElement("div", null, 
-        React.createElement("h2", {className: "whos-hot"}, "Who's hot (last 4 days)"), 
-        React.createElement("div", {className: "Layout"}, 
-          hotRunsList, 
-          hotHitterList, 
-          hotHRList, 
-          hotRBIList
+      <div>
+        <h2 className="whos-hot">Who's hot (last 4 days)</h2>
+        <div className="Layout">
+          {hotRunsList}
+          {hotHitterList}
+          {hotHRList}
+          {hotRBIList}
 
 
-        )
-      )
+        </div>
+      </div>
     );
   }
 
@@ -297,7 +297,7 @@ window.HitterChart = (HitterChart = React).createClass({
 
   render: function() {
     return (
-      React.createElement("div", {className: "Chart"})
+      <div className="Chart"></div>
     );
   }
 
@@ -435,100 +435,100 @@ window.HitterHistory = (HitterHistory = React).createClass({
 
         index++;
         return (
-          React.createElement("tr", null, 
-          React.createElement("td", {className: "PrimaryCol"}, 
-            React.createElement("button", {onClick: component.getPlayerHistory.bind(component, entity)}, 
-              index, ") ", entity.name
-            ), 
-            React.createElement("div", {className: "PlayerChartContainer", id: entity.mlbid})
-          ), 
-          React.createElement("td", null, 
-            entity.roster
-          ), 
-          React.createElement("td", null, 
-            entity.r
-          ), 
-          React.createElement("td", null, 
-            entity.h
-          ), 
-          React.createElement("td", null, 
-            entity.hr
-          ), 
-          React.createElement("td", null, 
-            entity.rbi
-          ), 
-          React.createElement("td", null, 
-            entity.sb
-          ), 
-          React.createElement("td", null, 
-            entity.total
-          ), 
-          React.createElement("td", null, 
-            entity.deltaTotal
-          ), 
-          React.createElement("td", null, 
-            moment(entity.lastUpdate).format("MMM-DD-YY")
-          ), 
-          React.createElement("td", {className: "delete-col"}, 
-            React.createElement("button", {className: "CommandButton", onClick: component.deleteEntity.bind(component, entity)}, 
-              React.createElement("span", {className: "glyphicon glyphicon-remove-circle"})
-            )
-          )
-        )
+          <tr>
+          <td className="PrimaryCol">
+            <button onClick={component.getPlayerHistory.bind(component, entity)}>
+              {index}) {entity.name}
+            </button>
+            <div className="PlayerChartContainer" id={entity.mlbid}></div>
+          </td>
+          <td >
+            {entity.roster}
+          </td>
+          <td >
+            {entity.r}
+          </td>
+          <td >
+            {entity.h}
+          </td>
+          <td >
+            {entity.hr}
+          </td>
+          <td >
+            {entity.rbi}
+          </td>
+          <td >
+            {entity.sb}
+          </td>
+          <td >
+            {entity.total}
+          </td>
+          <td>
+            {entity.deltaTotal}
+          </td>
+          <td>
+            {moment(entity.lastUpdate).format("MMM-DD-YY")}
+          </td>
+          <td className="delete-col">
+            <button className="CommandButton"  onClick={component.deleteEntity.bind(component, entity)}>
+              <span className="glyphicon glyphicon-remove-circle"></span>
+            </button>
+          </td>
+        </tr>
         );
       });
     }
 
 
     return (
-      React.createElement("div", {className: "post-summary-list-container"}, 
+      <div className="post-summary-list-container">
 
-        React.createElement("span", null, "count", entityRowItems.length), 
-        React.createElement("table", {className: "table table-striped"}, 
-          React.createElement("thead", null, 
-          React.createElement("tr", null, 
-            React.createElement("th", null, 
-              React.createElement("button", {onClick: component.sortIt.bind(component, 'name'), className: "CommandButton"}, "Name")
-            ), 
-            React.createElement("th", null, 
-              React.createElement("button", {onClick: component.sortIt.bind(component, 'roster'), className: "CommandButton"}, "Roster")
+        <span>count{entityRowItems.length}</span>
+        <table className="table table-striped">
+          <thead>
+          <tr>
+            <th>
+              <button onClick={component.sortIt.bind(component, 'name')} className="CommandButton">Name</button>
+            </th>
+            <th>
+              <button onClick={component.sortIt.bind(component, 'roster')}  className="CommandButton">Roster</button>
 
-            ), 
-            React.createElement("th", null, 
-              React.createElement("button", {onClick: component.sortIt.bind(component, 'r'), className: "CommandButton"}, "Runs")
-            ), 
-            React.createElement("th", null, 
-              React.createElement("button", {onClick: component.sortIt.bind(component, 'h'), className: "CommandButton"}, "Hits")
+            </th>
+            <th>
+              <button onClick={component.sortIt.bind(component, 'r')}  className="CommandButton">Runs</button>
+            </th>
+            <th>
+              <button onClick={component.sortIt.bind(component, 'h')}  className="CommandButton">Hits</button>
 
-            ), 
-            React.createElement("th", null, 
-              React.createElement("button", {onClick: component.sortIt.bind(component, 'hr'), className: "CommandButton"}, "HR")
+            </th>
+            <th>
+              <button onClick={component.sortIt.bind(component, 'hr')}  className="CommandButton">HR</button>
 
-            ), 
-            React.createElement("th", null, 
-              React.createElement("button", {onClick: component.sortIt.bind(component, 'rbi'), className: "CommandButton"}, "RBI")
-            ), 
-            React.createElement("th", null, 
-              React.createElement("button", {onClick: component.sortIt.bind(component, 'sb'), className: "CommandButton"}, "SB")
-            ), 
-            React.createElement("th", null, 
-              React.createElement("button", {onClick: component.sortIt.bind(component, 'total'), className: "CommandButton"}, "Total")
-            ), 
-            React.createElement("th", null, 
-              React.createElement("button", {onClick: component.sortIt.bind(component, 'deltaTotal'), className: "CommandButton"}, "Delta")
-            ), 
-            React.createElement("th", null, 
-              React.createElement("button", {onClick: component.sortIt.bind(component, 'lastUpdate'), className: "CommandButton"}, "Last Update")
-            ), 
-            React.createElement("th", null)
-          )
-          ), 
-          React.createElement("tbody", null, 
-          entityRowItems
-          )
-        )
+            </th>
+            <th>
+              <button onClick={component.sortIt.bind(component, 'rbi')}  className="CommandButton">RBI</button>
+            </th>
+            <th>
+              <button onClick={component.sortIt.bind(component, 'sb')}  className="CommandButton">SB</button>
+            </th>
+            <th>
+              <button onClick={component.sortIt.bind(component, 'total')}  className="CommandButton">Total</button>
+            </th>
+            <th>
+              <button onClick={component.sortIt.bind(component, 'deltaTotal')}  className="CommandButton">Delta</button>
+            </th>
+            <th>
+              <button onClick={component.sortIt.bind(component, 'lastUpdate')}  className="CommandButton">Last Update</button>
+            </th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          {entityRowItems}
+          </tbody>
+        </table>
 
-      )
+      </div>
     );
   }
 });
