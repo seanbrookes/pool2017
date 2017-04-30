@@ -85,6 +85,143 @@ Stats.directive('bbpStatsUpdateFrames', [
 
   }
 ]);
+Stats.directive('bbpStatsTopTen', [
+  function() {
+    return {
+      restrict: 'E',
+      controller: [
+        'Dailybatterstat',
+        'Dailypitcherstat',
+        '$scope',
+        function(Dailybatterstat, Dailypitcherstat, $scope) {
+          $scope.topTenList = [];
+
+          var masterHitterCollection = [];
+          var masterPitcherCollection = [];
+          var statsCollection = [];
+
+          var uniqueObj = {};
+
+          var rankedTotals = function(collection, stat) {
+            return collection.sort(function(a,b){ //Array now becomes [41, 25, 8, 7]
+              return b[stat] - a[stat]
+            });
+          };
+
+
+          var ONE_WEEK = 4 * 24 * 60 * 60 * 1000;  // Month in milliseconds
+          var filter = {
+            where: {
+              lastUpdate: {gt: Date.now() - ONE_WEEK}
+            }
+          };
+
+
+          var batterBlob = {};
+          var hotStatData = {};
+
+          function addHitterToHisCollection(hitter) {
+            var isUnique = true;
+            masterHitterCollection.map(function(hitterCollection) {
+              if (hitter.mlbid === hitterCollection[0].mlbid) {
+                hitterCollection.push(hitter);
+                isUnique = false;
+              }
+            });
+            if (isUnique) {
+              var newArray = [hitter];
+              masterHitterCollection.push(newArray);
+            }
+          }
+
+          var weeklyBatterStats = [];
+          var weeklyPitcherStats = [];
+          var masterStatList = [];
+
+          function rankTheTopTen() {
+            console.log('Rank Them');
+            weeklyBatterStats.forEach(function(player) {
+              masterStatList.push({
+                mlbid: player.mlbid,
+                name: player.name,
+                team: player.team,
+                pos: player.pos,
+                roster: player.roster,
+                total: player.total
+              })
+            });
+            weeklyPitcherStats.forEach(function(player) {
+              masterStatList.push({
+                mlbid: player.mlbid,
+                name: player.name,
+                team: player.team,
+                pos: player.pos,
+                roster: player.roster,
+                total: player.total
+              })
+            });
+
+
+            // rank by total
+
+            var x = rankedTotals(masterStatList, 'total');
+            var totalList = [];
+
+            x.forEach(function(player) {
+              if (!uniqueObj[player.mlbid]) {
+                uniqueObj[player.mlbid] = player;
+                totalList.push(player);
+
+              }
+            });
+
+
+
+
+            $scope.topTenList = totalList;
+
+
+
+          }
+
+          Dailybatterstat.find({filter: filter})
+            .$promise
+            .then(function(response) {
+              weeklyBatterStats = response;
+              Dailypitcherstat.find({filter: filter})
+                .$promise
+                .then(function(response) {
+                  weeklyPitcherStats = response;
+
+
+                  rankTheTopTen();
+
+                })
+                .catch(function(error) {
+                  console.log('get pitcher batter stats error: ', error);
+                });
+
+
+            })
+            .catch(function(error) {
+              console.log('get daily batter stats error: ', error);
+            });
+
+        }
+      ],
+      link: function(scope, el, attrs) {
+        scope.$watch('topTenList', function(newVal, oldVal) {
+
+          // if (newVal && newVal.length > 0) {
+          ReactDOM.render(React.createElement(TopTenList, {store:scope}), el[0]);
+          //  }
+
+          //    React.render(React.createElement(HitterBigData, {scope:scope}), el[0]);
+        });
+      }
+    }
+  }
+]);
 Stats.directive('bbpStatsBigData', [
   function() {
     return {

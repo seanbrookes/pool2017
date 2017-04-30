@@ -79,6 +79,44 @@ d3Chart._drawPoints = function(el, scales, data) {
     .attr('fill', 'none');
 
 };
+window.TopTenList = (TopTenList = React).createClass({
+
+  render() {
+
+
+    const data = this.props.store.topTenList;
+
+    var list = [];
+    if (data && data.length > 0) {
+      for (var i = 0; i < 10; i++) {
+        var player = data[i];
+        list.push(
+          <tr key={player.mlbid}>
+            <td>{(i + 1)}</td>
+            <td>{player.roster}</td>
+            <td className="hotstatname-col">{player.name}</td>
+            <td>{player.pos}</td>
+            <td>{player.team}</td>
+            <td className="hotstat-col">{player.total}</td>
+          </tr>
+        );
+      }
+
+    }
+
+
+    return(
+      <div className="hotlist hotlist--container">
+        <table className="hotlist--table">
+          <caption>Top 10</caption>
+          <tbody>
+          {list}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+});
 window.HitterBigData = (HitterBigData = React).createClass({
 
   render() {

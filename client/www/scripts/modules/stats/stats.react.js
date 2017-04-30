@@ -79,6 +79,44 @@ d3Chart._drawPoints = function(el, scales, data) {
     .attr('fill', 'none');
 
 };
+window.TopTenList = (TopTenList = React).createClass({
+
+  render() {
+
+
+    const data = this.props.store.topTenList;
+
+    var list = [];
+    if (data && data.length > 0) {
+      for (var i = 0; i < 10; i++) {
+        var player = data[i];
+        list.push(
+          React.createElement("tr", {key: player.mlbid}, 
+            React.createElement("td", null, (i + 1)), 
+            React.createElement("td", null, player.roster), 
+            React.createElement("td", {className: "hotstatname-col"}, player.name), 
+            React.createElement("td", null, player.pos), 
+            React.createElement("td", null, player.team), 
+            React.createElement("td", {className: "hotstat-col"}, player.total)
+          )
+        );
+      }
+
+    }
+
+
+    return(
+      React.createElement("div", {className: "hotlist hotlist--container"}, 
+        React.createElement("table", {className: "hotlist--table"}, 
+          React.createElement("caption", null, "Top 10"), 
+          React.createElement("tbody", null, 
+          list
+          )
+        )
+      )
+    );
+  }
+});
 window.HitterBigData = (HitterBigData = React).createClass({
 
   render() {
