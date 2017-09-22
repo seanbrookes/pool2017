@@ -15,8 +15,8 @@ module.exports = function(Statupdate) {
   //var battersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2015&sort_order=%27desc%27&sort_column=%27avg%27&stat_type=hitting&page_type=SortablePlayer&game_type=%27R%27&player_pool=QUALIFIER&season_type=ANY&league_code=%27AL%27&sport_code=%27mlb%27&results=1000&recSP=1&recPP=999"; 
   var nlBattersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2017&sort_order=%27desc%27&sort_column=%27g%27&stat_type=hitting&page_type=SortablePlayer&game_type=%27R%27&player_pool=QUALIFIER&season_type=ANY&league_code=%27NL%27&sport_code=%27mlb%27&results=1000&recSP=1&recPP=999"; 
   var battersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2017&sort_order=%27desc%27&sort_column=%27g%27&stat_type=hitting&page_type=SortablePlayer&game_type=%27R%27&player_pool=QUALIFIER&season_type=ANY&league_code=%27AL%27&sport_code=%27mlb%27&results=1000&recSP=1&recPP=999";
-  var pitchersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2017&sort_order=%27desc%27&sort_column=%27sv%27&stat_type=pitching&page_type=SortablePlayer&game_type=%27R%27&player_pool=ALL&season_type=ANY&league_code=%27AL%27&sport_code=%27mlb%27&results=1000&position=%271%27&recSP=1&recPP=999";
-  var nlPitchersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2017&sort_order=%27desc%27&sort_column=%27sv%27&stat_type=pitching&page_type=SortablePlayer&game_type=%27R%27&player_pool=ALL&season_type=ANY&league_code=%27NL%27&sport_code=%27mlb%27&results=1000&position=%271%27&recSP=1&recPP=999";
+  var pitchersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2017&sort_order=%27desc%27&sort_column=%27sv%27&stat_type=pitching&page_type=SortablePlayer&game_type=%27R%27&player_pool=QUALIFIER&season_type=ANY&league_code=%27AL%27&sport_code=%27mlb%27&results=1000&position=%271%27&recSP=1&recPP=999";
+  var nlPitchersUrl = "http://mlb.mlb.com/pubajax/wf/flow/stats.splayer?season=2017&sort_order=%27desc%27&sort_column=%27sv%27&stat_type=pitching&page_type=SortablePlayer&game_type=%27R%27&player_pool=QUALIFIER&season_type=ANY&league_code=%27NL%27&sport_code=%27mlb%27&results=1000&position=%271%27&recSP=1&recPP=999";
 
 
 
@@ -68,6 +68,75 @@ module.exports = function(Statupdate) {
       * request({uri: nlPitchersUrl}, function(err, response, body) {
       *
       * */
+      request({uri: nlBattersUrl}, function(err, response, body) {
+        if(err){
+          console.log('NL batter Request error: ' + err);
+          //return res.send(500,'there was an error: ' +response.statusCode  + ' : ' + err);
+        }
+
+        var JDId = '502110';
+        var jdPlayer = {};
+
+        var nlBatterUpdateObj = {};
+
+        var nlBatterPayload = {};
+        nlBatterPayload.data = body;
+        nlBatterPayload.metadata = {};
+
+        var nlBatterStatObj = JSON.parse(nlBatterPayload.data);
+        statsDate =  moment(nlBatterStatObj.stats_sortable_player.queryResults.created).format('YYYY MM DD');
+
+        nlLatestBattingStats = nlBatterStatObj.stats_sortable_player.queryResults.row;
+        nlBattingStatCount = nlLatestBattingStats.length;
+
+        for (var j = 0;j < nlBattingStatCount;j++){
+
+          var nlBatter = nlLatestBattingStats[j];
+          if (nlBatter.player_id === '502110') {
+            nlBatterUpdateObj['502110'] = nlBatter;
+            jdPlayer = nlBatter;
+            console.log('First Assign', nlBatterUpdateObj['502110']);
+            break;
+          }
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       request({uri: nlPitchersUrl}, function(err, response, body) {
         if(err){
@@ -84,7 +153,7 @@ module.exports = function(Statupdate) {
         nlPitchPayload.metadata = {};
 
         var nlPitcherStatObj = JSON.parse(nlPitchPayload.data);
-        statsDate =  moment(nlPitcherStatObj.stats_sortable_player.queryResults.created).format('YYYY MM DD');
+       // statsDate =  moment(nlPitcherStatObj.stats_sortable_player.queryResults.created).format('YYYY MM DD');
 
         nlLatestPitchingStats = nlPitcherStatObj.stats_sortable_player.queryResults.row;
         nlPitchingStatCount = nlLatestPitchingStats.length;
@@ -228,21 +297,48 @@ module.exports = function(Statupdate) {
                         if (currRawHitter.player_id === currentPlayer.mlbid){
                           // console.log('[' + currentPlayer.name + ']');
 
-                          var hitterStatPackageObj = {
-                            date: statsDate,
-                            lastUpdate: Date.now(),
-                            mlbid: currentPlayer.mlbid,
-                            name: currentPlayer.name,
-                            roster: targetRoster.slug,
-                            rosterStatus: currentPlayer.status,
-                            team: currRawHitter.team,
-                            pos: currentPlayer.pos,
-                            r: currRawHitter.r,
-                            h: currRawHitter.h,
-                            rbi: currRawHitter.rbi,
-                            hr: currRawHitter.hr,
-                            sb: currRawHitter.sb
-                          };
+                          var hitterStatPackageObj = {};
+
+
+
+                          if (currRawHitter.player_id === '502110') {
+                            hitterStatPackageObj = {
+                              date: statsDate,
+                              lastUpdate: Date.now(),
+                              mlbid: currentPlayer.mlbid,
+                              name: currentPlayer.name,
+                              roster: targetRoster.slug,
+                              rosterStatus: currentPlayer.status,
+                              team: jdPlayer.team,
+                              pos: currentPlayer.pos,
+                              r: (parseInt(currRawHitter.r) + parseInt(jdPlayer.r)),
+                              h: (parseInt(currRawHitter.h) + parseInt(jdPlayer.h)),
+                              rbi: (parseInt(currRawHitter.rbi) + parseInt(jdPlayer.rbi)),
+                              hr: (parseInt(currRawHitter.hr) + parseInt(jdPlayer.hr)),
+                              sb: (parseInt(currRawHitter.sb) + parseInt(jdPlayer.sb))
+                            };
+
+                            console.log('JD: ', hitterStatPackageObj);
+                          }
+                          else {
+
+
+
+                            hitterStatPackageObj = {
+                              date: statsDate,
+                              lastUpdate: Date.now(),
+                              mlbid: currentPlayer.mlbid,
+                              name: currentPlayer.name,
+                              roster: targetRoster.slug,
+                              rosterStatus: currentPlayer.status,
+                              team: currRawHitter.team,
+                              pos: currentPlayer.pos,
+                              r: currRawHitter.r,
+                              h: currRawHitter.h,
+                              rbi: currRawHitter.rbi,
+                              hr: currRawHitter.hr,
+                              sb: currRawHitter.sb
+                            };
 
                           //if ((hitterStatPackageObj.r > 1) ||
                           //    (hitterStatPackageObj.h > 2) ||
@@ -259,25 +355,25 @@ module.exports = function(Statupdate) {
 
 
 
-                          hitterStatPackageObj.total = getHitterTotal(hitterStatPackageObj);
-
-
-                          //console.log('| create L stat entry: ' + hitterStatPackageObj.rosterStatus);
-                          if (hitterStatPackageObj.rosterStatus === 'nl') {
-
-                            for (var t = 0;t < nlPlayerTotals.length;t++) {
-                              if (nlPlayerTotals[t].player_id === hitterStatPackageObj.mlbid) {
-                                console.log('| create stat entry xxxxxxx: ' + JSON.stringify(hitterStatPackageObj));
-
-                                hitterStatPackageObj.r = (parseInt(hitterStatPackageObj.r) + parseInt(nlPlayerTotals[t].r));
-                                hitterStatPackageObj.h = (parseInt(hitterStatPackageObj.h) + parseInt(nlPlayerTotals[t].h));
-                                hitterStatPackageObj.hr = (parseInt(hitterStatPackageObj.hr) + parseInt(nlPlayerTotals[t].hr));
-                                hitterStatPackageObj.rbi = (parseInt(hitterStatPackageObj.rbi) + parseInt(nlPlayerTotals[t].rbi));
-                                hitterStatPackageObj.sb = (parseInt(hitterStatPackageObj.sb) + parseInt(nlPlayerTotals[t].sb));
-                              }
-                            }
 
                           }
+                          hitterStatPackageObj.total = getHitterTotal(hitterStatPackageObj);
+                          //console.log('| create L stat entry: ' + hitterStatPackageObj.rosterStatus);
+                          //if (hitterStatPackageObj.rosterStatus === 'nl') {
+                          //
+                          //  for (var t = 0;t < nlPlayerTotals.length;t++) {
+                          //    if (nlPlayerTotals[t].player_id === hitterStatPackageObj.mlbid) {
+                          //      console.log('| create stat entry xxxxxxx: ' + JSON.stringify(hitterStatPackageObj));
+                          //
+                          //      hitterStatPackageObj.r = (parseInt(hitterStatPackageObj.r) + parseInt(nlPlayerTotals[t].r));
+                          //      hitterStatPackageObj.h = (parseInt(hitterStatPackageObj.h) + parseInt(nlPlayerTotals[t].h));
+                          //      hitterStatPackageObj.hr = (parseInt(hitterStatPackageObj.hr) + parseInt(nlPlayerTotals[t].hr));
+                          //      hitterStatPackageObj.rbi = (parseInt(hitterStatPackageObj.rbi) + parseInt(nlPlayerTotals[t].rbi));
+                          //      hitterStatPackageObj.sb = (parseInt(hitterStatPackageObj.sb) + parseInt(nlPlayerTotals[t].sb));
+                          //    }
+                          //  }
+                          //
+                          //}
 
 
 
@@ -554,7 +650,13 @@ module.exports = function(Statupdate) {
       * */
 
 
+      });
 
+      /*
+      *
+      * end JD Martinez loop
+      *
+      * */
 
 
 
